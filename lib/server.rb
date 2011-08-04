@@ -3,8 +3,8 @@ require 'webrick'
 class Server
   include WEBrick
 
-  def initialize(wiki)
-    @server = WEBrick::HTTPServer.new(:Port => 8583)
+  def initialize(niki, port = 8583)
+    @server = WEBrick::HTTPServer.new(:Port => port)
     @server.mount('/', NikiServlet)
     trap('INT'){ @server.shutdown }
   end

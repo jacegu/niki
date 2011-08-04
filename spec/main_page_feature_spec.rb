@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'http_helper'
 
 require 'niki'
@@ -8,7 +7,7 @@ describe "Nicki's Main Page" do
 
   before do
     niki = Niki.new
-    @server = Server.new(niki)
+    @server = Server.new(niki, HttpTesting::DEFAULT_PORT)
     Thread.new{ @server.start }
   end
 
