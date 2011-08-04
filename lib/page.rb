@@ -4,4 +4,8 @@ class Page
   def initialize(title)
     @title = title
   end
+
+  def to_s
+    title
+  end
 end
