@@ -1,8 +1,8 @@
 require 'uri'
 require 'net/http'
 
-DEFAULT_HOST = '0.0.0.0'
-DEFAULT_PORT = '80'
+DEFAULT_HOST = 'http://0.0.0.0'
+DEFAULT_PORT = '8583'
 
 module HttpTesting
   def get(resource, host = DEFAULT_HOST, port = DEFAULT_PORT)
