@@ -8,7 +8,7 @@ class Niki
   end
 
   def add_page(page)
-    @pages << page
+    pages << page
   end
 
   def has_pages?
