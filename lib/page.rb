@@ -8,4 +8,10 @@ class Page
   def to_s
     title
   end
+
+  def url
+    chunks = title.split(/\s/)
+    cleaned_up_chunks = chunks.map{ |c| c.gsub(/\W|_/, '') }
+    cleaned_up_chunks.join('-')
+  end
 end

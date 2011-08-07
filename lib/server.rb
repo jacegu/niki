@@ -23,13 +23,13 @@ class Server
       niki = @options[0]
       body = 'no niki has been created'
       if niki.has_pages?
-        pages = niki.pages.map{ |p| "<li>#{p}</li>" }.join("\n")
+        pages = niki.pages.map{ |p| "<li><a href=\"/#{p.url}\">#{p}</li>" }.join("\n")
         body = "<ul>#{pages}</ul>"
       end
       response.body = """ <html>
                           <head><title>Niki</title></head>
                           <body>
-                            #{body}<a href=\"/new-page\">Add a page</a>
+                            #{body}
                             <a href=\"/new-page\">Add a page</a>
                           </body>
                           </html> """

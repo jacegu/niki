@@ -36,6 +36,11 @@ describe "Niki's Main Page" do
       response = get '/'
       response.body.must_match /#{@the_page_title}/
     end
+
+    it 'prompts a link to each page' do
+      response = get '/'
+      response.body.must_match /<a .*href=('|")\/page-title('|")/
+    end
   end
 
 end
