@@ -14,6 +14,11 @@ describe "Niki's Main Page" do
     @server.stop
   end
 
+  it 'shows a link to create a new page' do
+    response = get '/'
+    response.body.must_match /<a .*href=('|")\/new-page('|")/
+  end
+
   describe 'if no page has been created' do
     it 'prompts a message telling there are no pages created' do
       response = get '/'

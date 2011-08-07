@@ -7,7 +7,7 @@ class Server
   def initialize(niki, port = 8583)
     @server = WEBrick::HTTPServer.new(:Port => port)
     @server.mount('/', NikiServlet, niki)
-    trap('INT'){ stop }
+    trap('INT'){ sto }
   end
 
   def start
@@ -28,7 +28,10 @@ class Server
       end
       response.body = """ <html>
                           <head><title>Niki</title></head>
-                          <body>#{body}</body>
+                          <body>
+                            #{body}<a href=\"/new-page\">Add a page</a>
+                            <a href=\"/new-page\">Add a page</a>
+                          </body>
                           </html> """
     end
   end
