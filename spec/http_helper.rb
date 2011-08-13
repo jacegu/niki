@@ -11,6 +11,11 @@ module HttpTesting
     request  = Net::HTTP::Get.new(url.path)
     response = Net::HTTP.start(url.host, url.port){ |http| http.request(request) }
   end
+
+  def post(resource, params, host = DEFAULT_HOST, port = DEFAULT_PORT)
+    url = URI.parse("#{host}:#{port}#{resource}")
+    response = Net::HTTP.post_form(url, params)
+  end
 end
 
 class MiniTest::Unit::TestCase
