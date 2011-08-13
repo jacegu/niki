@@ -7,7 +7,8 @@ class Server
   def initialize(niki, port = 8583)
     @server = WEBrick::HTTPServer.new(:Port => port)
     @server.mount('/', NikiServlet, niki)
-    trap('INT'){ sto }
+    @server.mount('/new-page', NewPageServlet, niki)
+    trap('INT'){ stop }
   end
 
   def start
@@ -33,6 +34,16 @@ class Server
                             <a href=\"/new-page\">Add a page</a>
                           </body>
                           </html> """
+    end
+  end
+
+  class NewPageServlet < HTTPServlet::AbstractServlet
+    def do_POST(request, response)
+      niki = @options[0]
+      title = request.query['title']
+      content = request.query['content']
+      page = Page.with(title, content)
+      niki.add_page page
     end
   end
 end
