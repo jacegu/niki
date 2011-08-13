@@ -2,24 +2,18 @@
 
 describe Page do
 
-  before do
-    @the_title = 'some title'
-    @page = Page.new(@the_title)
-  end
-
   describe 'a new page' do
+    before do
+      @the_title = 'some title'
+      @page = Page.new(@the_title)
+    end
+
     it 'is created with a title' do
       @page.title.must_equal @the_title
     end
 
     it 'has an empty content' do
       @page.content.must_be_empty
-    end
-  end
-
-  describe '#to_s' do
-    it 'returs the title of the page' do
-      @page.to_s.must_equal @the_title
     end
   end
 
@@ -57,6 +51,13 @@ describe Page do
     end
   end
 
+  describe '#to_s' do
+    it 'returs the title of the page' do
+      page_title = 'some title'
+      Page.new(page_title).to_s.must_equal page_title
+    end
+  end
+
   describe '::with title, content' do
     before do
       @the_title = 'title'
@@ -72,4 +73,5 @@ describe Page do
       @page.content.must_equal @the_content
     end
   end
+
 end

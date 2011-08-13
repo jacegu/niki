@@ -15,17 +15,17 @@ class Page
     @content = ''
   end
 
-  def to_s
-    title
-  end
-
   def url
     chunks = title.split(/\s/)
-    cleaned_up_chunks = chunks.map{ |c| c.gsub(/\W|_/, '') }
-    cleaned_up_chunks.join('-')
+    alphanumeric_chunks = chunks.map{ |c| c.gsub(/\W|_/, '') }
+    alphanumeric_chunks.join('-')
   end
 
   def <=>(other)
     title <=> other.title
+  end
+
+  def to_s
+    title
   end
 end
