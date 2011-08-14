@@ -32,9 +32,11 @@ class Server
     end
   end
 
-  class NikiServlet < HTTPServlet::AbstractServlet
+  class HTTPServlet::AbstractServlet
     include Renderer
+  end
 
+  class NikiServlet < HTTPServlet::AbstractServlet
     def do_GET(request, response)
       @niki = @options[0]
       response.body = render :index
@@ -43,21 +45,7 @@ class Server
 
   class NewPageServlet < HTTPServlet::AbstractServlet
     def do_GET(request, response)
-      response.body = """
-                        <html>
-                          <head><title>Niki</title></head>
-                          <body>
-                            <form method='POST' action='/new-page'>
-                              <h1>Add a page to niki</h1>
-                              <label for='title'>Title</label>
-                              <input type='text' name='title' ></input>
-                              <label for='content'>Content</label>
-                              <textarea name='content' ></textarea>
-                              <input type='submit' value='Add page' />
-                            </form>
-                          </body>
-                        </html>
-                      """
+      response.body = render :new_page
     end
 
     def do_POST(request, response)
