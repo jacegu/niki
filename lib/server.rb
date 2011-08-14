@@ -38,10 +38,29 @@ class Server
   end
 
   class NewPageServlet < HTTPServlet::AbstractServlet
+    def do_GET(request, response)
+      response.body = """
+                        <html>
+                          <head><title>Niki</title></head>
+                          <body>
+                            <form method='POST' action='/new-page'>
+                              <h1>Add a page to niki</h1>
+                              <label for='title'>Title</label>
+                              <input type='text' name='title' ></input>
+                              <label for='content'>Content</label>
+                              <textarea name='content' ></textarea>
+                              <input type='submit' value='Add page' />
+                            </form>
+                          </body>
+                        </html>
+                      """
+    end
+
     def do_POST(request, response)
       niki = @options[0]
       title = request.query['title']
       content = request.query['content']
+      puts "ADDING A PAGE WITH TITLE #{title} CONTAINING #{content}"
       page = Page.with(title, content)
       niki.add_page page
     end
