@@ -1,0 +1,15 @@
+ <html>
+   <head>
+     <title>Niki</title>
+   </head>
+   <body>
+     <% if @niki.has_pages? %>
+       <% @niki.pages.each do |p| %>
+         <a href="/<%= p.url %>"><%= p.title %></a>
+       <% end %>
+     <% else %>
+       <p>no niki has been created</p>
+     <% end %>
+     <a href="/new-page">Add a page</a>
+   </body>
+ </html>

@@ -1,11 +1,14 @@
 require 'webrick'
+require 'erb'
 require 'niki'
 
 class Server
   include WEBrick
 
+  PUBLIC_DIR = 'public'
+
   def initialize(niki, port = 8583)
-    @server = WEBrick::HTTPServer.new(:Port => port)
+    @server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => PUBLIC_DIR)
     @server.mount('/', NikiServlet, niki)
     @server.mount('/new-page', NewPageServlet, niki)
     trap('INT'){ stop }
@@ -19,21 +22,22 @@ class Server
     @server.shutdown
   end
 
+  module Renderer
+    VIEWS_DIR  = 'views'
+
+    def render(view)
+      html = ""
+      File.open("#{VIEWS_DIR}/#{view}.html.erb", 'r'){ |f| html = f.read }
+      ERB.new(html).result(binding)
+    end
+  end
+
   class NikiServlet < HTTPServlet::AbstractServlet
+    include Renderer
+
     def do_GET(request, response)
-      niki = @options[0]
-      body = 'no niki has been created'
-      if niki.has_pages?
-        pages = niki.pages.map{ |p| "<li><a href=\"/#{p.url}\">#{p}</li>" }.join("\n")
-        body = "<ul>#{pages}</ul>"
-      end
-      response.body = """ <html>
-                          <head><title>Niki</title></head>
-                          <body>
-                            #{body}
-                            <a href=\"/new-page\">Add a page</a>
-                          </body>
-                          </html> """
+      @niki = @options[0]
+      response.body = render :index
     end
   end
 
@@ -60,7 +64,6 @@ class Server
       niki = @options[0]
       title = request.query['title']
       content = request.query['content']
-      puts "ADDING A PAGE WITH TITLE #{title} CONTAINING #{content}"
       page = Page.with(title, content)
       niki.add_page page
     end
