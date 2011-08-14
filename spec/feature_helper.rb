@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'server'
 
 module Kernel
   def feature(feature_name, &feature_spec)

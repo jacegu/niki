@@ -1,6 +1,5 @@
+require 'feature_helper'
 require 'http_helper'
-
-require 'server'
 
 feature "Niki's Main Page" do
 

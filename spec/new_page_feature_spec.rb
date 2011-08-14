@@ -1,6 +1,5 @@
+require 'feature_helper'
 require 'http_helper'
-
-require 'server'
 
 feature 'Adding a Page to niki' do
   it 'adds the page' do
