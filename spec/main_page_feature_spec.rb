@@ -2,17 +2,7 @@ require 'http_helper'
 
 require 'server'
 
-describe "Niki's Main Page" do
-
-  before do
-    @niki = Niki.new
-    @server = Server.new(@niki, HttpTesting::DEFAULT_PORT)
-    Thread.new{ @server.start }
-  end
-
-  after do
-    @server.stop
-  end
+feature "Niki's Main Page" do
 
   it 'shows a link to create a new page' do
     response = get '/'
