@@ -3,13 +3,17 @@
      <title>Niki</title>
    </head>
    <body>
+     <h1>Welcome to Niki</h1>
      <% if @niki.has_pages? %>
+       <p>This are the nikis that currently exist:<p>
+       <ul>
        <% @niki.pages.each do |p| %>
-         <a href="/<%= p.url %>"><%= p.title %></a>
+         <li><a href="/<%= p.url %>"><%= p.title %></a>
        <% end %>
+       </ul>
      <% else %>
        <p>no niki has been created</p>
      <% end %>
-     <a href="/new-page">Add a page</a>
+     <p><a href="/new-page">Add a page</a></p>
    </body>
  </html>
