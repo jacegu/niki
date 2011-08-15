@@ -1,19 +1,29 @@
  <html>
    <head>
      <title>Niki</title>
+     <link rel="stylesheet" type="text/css" href="stylesheets/niki.css" />
    </head>
    <body>
-     <h1>Welcome to Niki</h1>
-     <% if @niki.has_pages? %>
-       <p>This are the nikis that currently exist:<p>
-       <ul>
-       <% @niki.pages.each do |p| %>
-         <li><a href="/<%= p.url %>"><%= p.title %></a>
-       <% end %>
-       </ul>
-     <% else %>
-       <p>no niki has been created</p>
-     <% end %>
-     <p><a href="/new-page">Add a page</a></p>
+     <section id="content">
+       <p id="disclaimer">
+         Welcome to niki, the coolest and simplest wiki ever! What are you waiting for? Try it right now!
+       </p>
+       <section id="nikis">
+         <% if @niki.has_pages? %>
+           <h1>This are the nikis that currently exist</h1>
+           <ul>
+           <% @niki.pages.each do |p| %>
+             <li><a href="/<%= p.url %>"><%= p.title %></a>
+           <% end %>
+           </ul>
+         <% else %>
+           <h2>No niki has been created yet</h2>
+           <p>Wanna be the first one? Go ahead!</p>
+         <% end %>
+       </section>
+       <section class="actions">
+         <a href="/new-page">+ create a niki</a>
+       </section>
+     </section>
    </body>
  </html>

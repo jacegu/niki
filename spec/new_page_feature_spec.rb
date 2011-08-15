@@ -14,15 +14,15 @@ feature 'Adding a Page to niki' do
     end
 
     it 'renders a field for the page title' do
-      @page_content.must_match /<input.+name=('|")title('|")/
+      @page_content.must_match /<input.+name=('|")title('|")/i
     end
 
     it 'renders a field for the page content' do
-      @page_content.must_match /<textarea.+name=('|")content('|")/
+      @page_content.must_match /<textarea.+name=('|")content('|")/i
     end
 
-    it 'renders an add page button' do
-      @page_content.must_match /<input.*type=('|")submit('|").+Add page/
+    it 'renders an create niki button' do
+      @page_content.must_match /<input.*type=('|")submit('|").+Create it/i
     end
   end
 

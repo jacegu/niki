@@ -1,18 +1,23 @@
 <html>
   <head>
     <title>Niki</title>
+     <link rel="stylesheet" type="text/css" href="/stylesheets/niki.css" />
   </head>
   <body>
-    <form method='POST' action='/new-page'>
-      <h1>Add a page to niki</h1>
+    <section id="content">
+      <h1>Create a new niki</h1>
+      <form id="new-niki" method='POST' action='/new-page'>
+        <label for='title'>Title</label>
+        <input type='text' name='title'></input>
 
-      <label for='title'>Title</label>
-      <input type='text' name='title'></input>
+        <label for='content'>Content</label>
+        <textarea name='content'></textarea>
 
-      <label for='content'>Content</label>
-      <textarea name='content'></textarea>
-
-      <input type='submit' value='Add page' />
-    </form>
+        <section class="actions">
+          <a href="javascript:history.back();">Back</a>
+          <input type='submit' value='Create it' />
+        </section>
+     </form>
+    </section>
   </body>
 </html>

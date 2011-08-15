@@ -9,7 +9,7 @@ class Server
 
   def initialize(niki, port = 8583)
     @server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => PUBLIC_DIR)
-    @server.mount('/', NikiServlet, niki)
+    @server.mount('/niki', NikiServlet, niki)
     @server.mount('/new-page', NewPageServlet, niki)
     trap('INT'){ stop }
   end

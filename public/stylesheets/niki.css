@@ -1,0 +1,74 @@
+body{
+  margin: 80px 0;
+  background: #242424;
+  color: #efefef;
+  font-family: Georgia, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: "Trebuchet MS", Tahoma, sans-serif; }
+
+p { margin: .4em 0; }
+
+a, a:visited, a:active {
+  font-family: "Trebuchet MS", Tahoma, sans-serif;
+  font-weight: 300;
+  color: #ee4545;
+  text-decoration: none;
+}
+
+a:hover { color: #ff4545; }
+
+label {
+  display: block;
+  margin: 18px 0 6px;
+  font-size: 1.1em;
+}
+
+input[type="text"], textarea { padding: 5px; }
+
+input[type="submit"] {
+  padding: 8px 12px;
+  background: #ee4545;
+  color: #efefef;
+  border: 0;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  color: white;
+  background: #ff4545;
+}
+
+section#content {
+  width: 760px;
+  margin: 0 auto;
+}
+
+p#disclaimer {
+  position: absolute;
+  top: 20px;
+  margin: 0 auto;
+  font-size: 1.1em;
+  font-weight: 300;
+  font-style: italic;
+  text-align: center;
+}
+
+section.actions {
+  padding: 18px 0;
+  font-size: 1.1em;
+  text-align: right;
+}
+
+section.actions a, section.actions input { margin-left: 15px; }
+
+section#nikis {
+  display: block;
+  margin: 40px 0;
+}
+
+#new-niki input[type="text"], #new-niki textarea { width: 100%; }
+#new-niki textarea { height: 400px; }
+

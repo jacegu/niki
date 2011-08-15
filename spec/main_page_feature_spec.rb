@@ -4,14 +4,14 @@ require 'http_helper'
 feature "Niki's Main Page" do
 
   it 'shows a link to create a new page' do
-    response = get '/'
+    response = get '/niki'
     response.body.must_match /<a .*href=('|")\/new-page('|")/
   end
 
   describe 'if no page has been created' do
     it 'prompts a message telling there are no pages created' do
-      response = get '/'
-      response.body.must_match /no niki has been created/
+      response = get '/niki'
+      response.body.must_match /no niki has been created/i
     end
   end
 
@@ -19,16 +19,16 @@ feature "Niki's Main Page" do
     before do
       @the_page_title = 'page title'
       @niki.add_page Page.new(@the_page_title)
+      response = get '/niki'
+      @response_body = response.body
     end
 
     it 'lists them showing their title' do
-      response = get '/'
-      response.body.must_match /#{@the_page_title}/
+      @response_body.must_match /#{@the_page_title}/
     end
 
     it 'prompts a link to each page' do
-      response = get '/'
-      response.body.must_match /<a .*href=('|")\/page-title('|")/
+      @response_body.must_match /<a .*href=('|")\/page-title('|")/
     end
   end
 
