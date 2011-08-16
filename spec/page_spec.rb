@@ -8,7 +8,7 @@ describe Page do
       @page = Page.new(@the_title)
     end
 
-    it 'is created with a title' do
+    it 'has a title' do
       @page.title.must_equal @the_title
     end
 
@@ -43,14 +43,6 @@ describe Page do
     end
   end
 
-  describe '#<=>' do
-    it 'returns 0 if both pages have the same title ' do
-      page1 = Page.new 'x'
-      page2 = Page.new 'x'
-      (page1 <=> page2).must_equal 0
-    end
-  end
-
   describe '#to_s' do
     it 'returs the title of the page' do
       page_title = 'some title'
@@ -73,5 +65,4 @@ describe Page do
       @page.content.must_equal @the_content
     end
   end
-
 end

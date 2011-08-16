@@ -1,6 +1,4 @@
 class Page
-  include Comparable
-
   attr_reader :title
   attr_accessor :content
 
@@ -19,10 +17,6 @@ class Page
     chunks = title.split(/\s/)
     alphanumeric_chunks = chunks.map{ |c| c.gsub(/\W|_/, '') }
     alphanumeric_chunks.join('-')
-  end
-
-  def <=>(other)
-    title <=> other.title
   end
 
   def to_s
