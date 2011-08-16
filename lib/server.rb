@@ -50,13 +50,13 @@ class Server
 
     def do_POST(request, response)
       niki = @options[0]
-      title = request.query['title']
-      if not title or title.empty?
+      @title = request.query['title']
+      @content = request.query['content']
+      if @title.nil? or @title.empty?
         @error_message = 'every niki must have a title'
         response.body = render :new_page
       else
-        content = request.query['content']
-        page = Page.with(title, content)
+        page = Page.with(@title, @content)
         niki.add_page page
       end
     end
