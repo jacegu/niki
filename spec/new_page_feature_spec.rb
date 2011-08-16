@@ -37,9 +37,14 @@ feature 'Adding a Page to niki' do
     end
 
     it 'prompts an error message if no title was given' do
-      page_content = 'the page content'
-      response = post '/new-page', {:content => page_content}
+      response = post '/new-page', {:content => 'some content'}
       response.body.must_match /must have a title/
     end
+
+    it 'prompts an error message if the title is empty' do
+      response = post '/new-page', {:title => '', :content => 'some content'}
+      response.body.must_match /must have a title/
+    end
+
   end
 end

@@ -51,8 +51,8 @@ class Server
     def do_POST(request, response)
       niki = @options[0]
       title = request.query['title']
-      if not title
-        @error_message = 'Each niki must have a title'
+      if not title or title.empty?
+        @error_message = 'every niki must have a title'
         response.body = render :new_page
       else
         content = request.query['content']
