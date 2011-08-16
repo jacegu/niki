@@ -31,10 +31,15 @@ feature 'Adding a Page to niki' do
       page_title = 'the page title'
       page_content = 'the page content'
       post '/new-page', {:title => page_title, :content => page_content}
-      @niki.pages.last.title.must_equal page_title
-      @niki.pages.last.content.must_equal page_content
+      last_page = @niki.pages.last
+      last_page.title.must_equal page_title
+      last_page.content.must_equal page_content
     end
 
-    it 'prompts an error message if no title was given'
+    it 'prompts an error message if no title was given' do
+      page_content = 'the page content'
+      response = post '/new-page', {:content => page_content}
+      response.body.must_match /must have a title/
+    end
   end
 end
