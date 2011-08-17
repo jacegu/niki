@@ -4,13 +4,13 @@
      <link rel="stylesheet" type="text/css" href="/stylesheets/niki.css" />
   </head>
   <body>
-    <section id="content">
-      <% if @error_message %>
-        <section id="errors">
-          <p><%= @error_message %></p>
-        </section>
-      <% end %>
+    <% if @error_message %>
+      <section id="errors">
+        <p><%= @error_message %></p>
+      </section>
+    <% end %>
 
+    <section id="content">
       <h1>Create a new niki</h1>
       <form id="new-niki" method='POST' action='/new-page'>
         <label for='title'>Title</label>
