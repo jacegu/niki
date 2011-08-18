@@ -8,6 +8,14 @@ class PageRequest
   end
 
   def all_pages?
-    path == ALL_PAGES_PATH or path == "#{ALL_PAGES_PATH}/"
+    ALL_PAGES_PATH == path
+  end
+
+  def page_title
+    if all_pages?
+      ''
+    else
+      path.gsub("#{ALL_PAGES_PATH}/", '')
+    end
   end
 end
