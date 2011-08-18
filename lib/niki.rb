@@ -14,4 +14,8 @@ class Niki
   def has_pages?
     pages.any?
   end
+
+  def page_entitled(title)
+    pages.select{ |p| p.title == title }.first
+  end
 end

@@ -7,7 +7,7 @@ describe Niki do
 
   describe 'when created' do
     it 'has no pages' do
-      @niki.pages.must_be_empty
+      @niki.has_pages?.must_equal false
     end
   end
 
@@ -28,6 +28,20 @@ describe Niki do
       @niki.add_page(stub)
       @niki.has_pages?.must_equal true
     end
+  end
 
+  describe '#page_entitled title' do
+    describe 'if a page with that title exists 'do
+      it 'returns that page' do
+        the_page_title = 'some title for the page'
+        the_page = Page.new(the_page_title)
+        @niki.add_page the_page
+        @niki.page_entitled(the_page_title).must_equal the_page
+      end
+    end
+
+    describe 'if no page with that title exists' do
+      it 'returns a null page'
+    end
   end
 end
