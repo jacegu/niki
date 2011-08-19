@@ -51,6 +51,13 @@ module Niki
       end
     end
 
+    describe '#found?' do
+      it 'is always true' do
+        page = Page.new('title')
+        page.found?.must_equal true
+      end
+    end
+
     describe '#to_s' do
       it 'returs the title of the page' do
         page_title = 'some title'
@@ -75,4 +82,23 @@ module Niki
     end
 
   end
+
+  describe NullPage do
+    before do
+      @null_page = NullPage.new
+    end
+
+    it 'has an empty title' do
+      @null_page.title.must_be_empty
+    end
+
+    it 'has an empty url' do
+      @null_page.url.must_be_empty
+    end
+
+    it 'is never found' do
+      @null_page.found?.must_equal false
+    end
+  end
+
 end

@@ -20,8 +20,22 @@ module Niki
       alphanumeric_chunks.join('-')
     end
 
+    def found?
+      true
+    end
+
     def to_s
       title
+    end
+  end
+
+  class NullPage < Page
+    def initialize
+      @title = ''
+    end
+
+    def found?
+      false
     end
   end
 end
