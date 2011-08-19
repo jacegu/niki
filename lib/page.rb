@@ -14,7 +14,7 @@ class Page
   end
 
   def url
-    chunks = title.split(/\s/)
+    chunks = title.downcase.split(/\s/)
     alphanumeric_chunks = chunks.map{ |c| c.gsub(/\W|_/, '') }
     alphanumeric_chunks.join('-')
   end

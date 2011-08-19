@@ -41,6 +41,11 @@ describe Page do
       page = Page.new('*s",(o).#m_$e-t·h%i|n=g+')
       page.url.must_equal 'something'
     end
+
+    it 'downcases every letter in the title' do
+      page = Page.new('SoMeTHinG With UPPERCASE')
+      page.url.must_equal 'something-with-uppercase'
+    end
   end
 
   describe '#to_s' do
