@@ -1,4 +1,4 @@
-require 'page'
+require 'niki/page'
 
 module Niki
   class Wiki

@@ -14,8 +14,8 @@ task :test => [:features, :specs]
 
 task :run do
   $: << File.join(File.expand_path(File.dirname(__FILE__)), 'lib')
-  require 'server'
-  require 'niki'
+  require 'niki/server'
+  require 'niki/wiki'
   server = Niki::Server.new(Niki::Wiki.new)
   server.start
 end
