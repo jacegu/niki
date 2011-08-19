@@ -11,7 +11,7 @@ class PageRequest
     ALL_PAGES_PATH == path
   end
 
-  def page_title
+  def page_url
     if all_pages?
       ''
     else

@@ -22,20 +22,20 @@ describe PageRequest do
     end
   end
 
-  describe '#page_title' do
+  describe '#page_url' do
     describe 'all pages were requested' do
       it 'returns an empty string as page title' do
         requested = PageRequest.new(PageRequest::ALL_PAGES_PATH)
-        requested.page_title.must_be_empty
+        requested.page_url.must_be_empty
       end
     end
 
     describe 'a particular page was requested' do
-      it 'extracts the requested title from the requested path' do
-        the_page_title = 'writting-a-cool-wiki'
-        requested_path = "/pages/#{the_page_title}"
+      it 'extracts the requested url from the requested path' do
+        the_page_url = 'writting-a-cool-wiki'
+        requested_path = "/pages/#{the_page_url}"
         requested = PageRequest.new(requested_path)
-        requested.page_title.must_equal the_page_title
+        requested.page_url.must_equal the_page_url
       end
     end
   end
