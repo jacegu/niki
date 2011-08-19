@@ -5,7 +5,7 @@ feature "An existing niki page" do
   describe 'showing an existing page' do
     before do
       page_content = "Content\nfor\nthis\npage"
-      @page = Page.with('Testing page', page_content)
+      @page = Niki::Page.with('Testing page', page_content)
       @niki.add_page(@page)
     end
 

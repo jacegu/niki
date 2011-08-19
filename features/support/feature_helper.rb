@@ -11,8 +11,8 @@ module Kernel
   end
 
   def run_niki_server
-    @niki = Niki.new
-    @server = Server.new(@niki, HttpTesting::DEFAULT_PORT)
+    @niki = Niki::Niki.new
+    @server = Niki::Server.new(@niki, HttpTesting::DEFAULT_PORT)
     Thread.new{ @server.start }
   end
 

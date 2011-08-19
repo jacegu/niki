@@ -18,7 +18,7 @@ feature "Niki's Main Page" do
   describe 'if pages have been created' do
     before do
       @the_page_title = 'page title'
-      @niki.add_page Page.new(@the_page_title)
+      @niki.add_page Niki::Page.new(@the_page_title)
       response = get '/pages'
       @response_body = response.body
     end
