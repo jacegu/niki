@@ -10,19 +10,19 @@
        </p>
        <section id="nikis">
          <% if @niki.has_pages? %>
-           <h1>This are the nikis that currently exist</h1>
+           <h1>This are the pages that currently exist</h1>
            <ul>
            <% @niki.pages.each do |p| %>
-             <li><a href="/<%= p.url %>"><%= p.title %></a>
+             <li><a href="/pages/<%= p.url %>"><%= p.title %></a>
            <% end %>
            </ul>
          <% else %>
-           <h2>No niki has been created yet</h2>
+           <h2>No page has been created yet</h2>
            <p>Wanna be the first one? Go ahead!</p>
          <% end %>
        </section>
        <section class="actions">
-         <a href="/new-page">+ create a niki</a>
+         <a href="/new-page">+ create a page</a>
        </section>
      </section>
    </body>
