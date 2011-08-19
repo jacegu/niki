@@ -14,4 +14,11 @@ feature "An existing wiki page" do
       response.body.must_match /<h1>#{@page.title}<\/h1>/
     end
   end
+
+  describe 'requested page does not exist' do
+    it 'returns a 404 error' do
+      response = get '/pages/non-existing-page-for-sure'
+      response.code.must_equal '404'
+    end
+  end
 end

@@ -55,7 +55,15 @@ module Niki
 
       def render_page_with_url(url)
         @page = @wiki.page_with_url(url)
-        @response.body = render :page
+        if @page.found?
+          @response.body = render :page
+        else
+          render_not_found
+        end
+      end
+
+      def render_not_found
+        raise WEBrick::HTTPStatus::NotFound
       end
     end
 
