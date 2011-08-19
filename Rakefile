@@ -6,7 +6,7 @@ Rake::TestTask.new('run_specs') do |t|
 end
 
 Rake::TestTask.new('run_features') do |t|
-  t.pattern = 'features/**_feature_spec.rb'
+  t.pattern = 'features/**_feature.rb'
   t.libs << ['features/support', 'lib']
 end
 
