@@ -1,6 +1,7 @@
 require 'webrick'
 require 'erb'
 require 'niki'
+require 'page_request'
 
 class Server
   include WEBrick
@@ -9,7 +10,7 @@ class Server
 
   def initialize(niki, port = 8583)
     @server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => PUBLIC_DIR)
-    @server.mount('/niki', NikiServlet, niki)
+    @server.mount('/pages', ExistingPageServlet, niki)
     @server.mount('/new-page', NewPageServlet, niki)
     trap('INT'){ stop }
   end
@@ -36,10 +37,24 @@ class Server
     include Renderer
   end
 
-  class NikiServlet < HTTPServlet::AbstractServlet
+  class ExistingPageServlet < HTTPServlet::AbstractServlet
     def do_GET(request, response)
-      @niki = @options[0]
-      response.body = render :index
+      @niki, @response = @options[0], response
+      requested = PageRequest.new(request.path)
+      if requested.all_pages?
+        render_all_pages
+      else
+        render_page_with_url(requested.page_url)
+      end
+    end
+
+    def render_all_pages
+      @response.body = render :index
+    end
+
+    def render_page_with_url(url)
+      @page = @niki.page_with_url(url)
+      @response.body = render :page
     end
   end
 
