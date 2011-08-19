@@ -17,7 +17,12 @@ module Niki
     end
 
     def page_with_url(url)
-      pages.select{ |p| p.url == url }.first
+      page = pages.select{ |p| p.url == url }.first
+      if page
+        page
+      else
+        NullPage.new
+      end
     end
   end
 end

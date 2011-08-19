@@ -44,7 +44,10 @@ module Niki
       end
 
       describe 'if no page with that url exists' do
-        it 'returns a null page'
+        it 'returns a null page' do
+          the_page = @wiki.page_with_url('does-not-exist')
+          the_page.class.must_equal NullPage
+        end
       end
     end
   end
