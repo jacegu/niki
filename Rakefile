@@ -1,10 +1,16 @@
 require 'rake/testtask'
 
-Rake::TestTask.new do |t|
+Rake::TestTask.new('run_specs') do |t|
   t.pattern = 'spec/**_spec.rb'
   t.libs << ['spec', 'lib']
-  t.verbose = true
 end
+
+Rake::TestTask.new('run_features') do |t|
+  t.pattern = 'features/**_feature_spec.rb'
+  t.libs << ['features/support', 'lib']
+end
+
+task :test => [:run_features, :run_specs]
 
 task :run do
   $: << File.join(File.expand_path(File.dirname(__FILE__)), 'lib')

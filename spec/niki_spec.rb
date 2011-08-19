@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'niki'
 
 describe Niki do
   before do
