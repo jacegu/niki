@@ -1,12 +1,12 @@
 require 'feature_helper'
 require 'http_helper'
 
-feature "An existing niki page" do
+feature "An existing wiki page" do
   describe 'showing an existing page' do
     before do
       page_content = "Content\nfor\nthis\npage"
       @page = Niki::Page.with('Testing page', page_content)
-      @niki.add_page(@page)
+      @wiki.add_page(@page)
     end
 
     it 'renders the title inside an <h1> tag' do

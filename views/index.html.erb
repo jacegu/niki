@@ -9,10 +9,10 @@
          Welcome to niki, the coolest and simplest wiki ever! What are you waiting for? Try it right now!
        </p>
        <section id="nikis">
-         <% if @niki.has_pages? %>
+         <% if @wiki.has_pages? %>
            <h1>This are the pages that currently exist</h1>
            <ul>
-           <% @niki.pages.each do |p| %>
+           <% @wiki.pages.each do |p| %>
              <li><a href="/pages/<%= p.url %>"><%= p.title %></a>
            <% end %>
            </ul>

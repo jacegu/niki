@@ -1,34 +1,34 @@
 require 'spec_helper'
-require 'niki'
+require 'wiki'
 
 module Niki
-  describe Niki do
+  describe Wiki do
     before do
-      @niki = Niki.new
+      @wiki = Wiki.new
     end
 
     describe 'when created' do
       it 'has no pages' do
-        @niki.has_pages?.must_equal false
+        @wiki.has_pages?.must_equal false
       end
     end
 
     describe '#add_page page' do
-      it 'adds the page to the niki' do
+      it 'adds the page to the wiki' do
         page = stub
-        @niki.add_page(page)
-        @niki.pages.must_include page
+        @wiki.add_page(page)
+        @wiki.pages.must_include page
       end
     end
 
     describe '#has_pages?' do
-      it 'returns false if niki has no pages' do
-        @niki.has_pages?.must_equal false
+      it 'returns false if the wiki has no pages' do
+        @wiki.has_pages?.must_equal false
       end
 
-      it 'returns true if niki has any pages' do
-        @niki.add_page(stub)
-        @niki.has_pages?.must_equal true
+      it 'returns true if the wiki has any pages' do
+        @wiki.add_page(stub)
+        @wiki.has_pages?.must_equal true
       end
     end
 
@@ -38,8 +38,8 @@ module Niki
           the_page_url = 'some-url'
           the_page = stub
           the_page.expect(:url, the_page_url)
-          @niki.add_page(the_page)
-          @niki.page_with_url(the_page_url).must_be_same_as the_page
+          @wiki.add_page(the_page)
+          @wiki.page_with_url(the_page_url).must_be_same_as the_page
         end
       end
 

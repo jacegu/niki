@@ -1,7 +1,7 @@
 require 'feature_helper'
 require 'http_helper'
 
-feature "Niki's Main Page" do
+feature "Wiki's Main Page" do
 
   it 'shows a link to create a new page' do
     response = get '/pages'
@@ -18,7 +18,7 @@ feature "Niki's Main Page" do
   describe 'if pages have been created' do
     before do
       @the_page_title = 'page title'
-      @niki.add_page Niki::Page.new(@the_page_title)
+      @wiki.add_page Niki::Page.new(@the_page_title)
       response = get '/pages'
       @response_body = response.body
     end

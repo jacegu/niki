@@ -1,7 +1,7 @@
 require 'webrick'
 require 'erb'
-require 'niki'
-require 'page_request'
+require 'niki/wiki'
+require 'niki/page_request'
 
 module Niki
   class Server
@@ -40,7 +40,7 @@ module Niki
 
     class ExistingPageServlet < HTTPServlet::AbstractServlet
       def do_GET(request, response)
-        @niki, @response = @options[0], response
+        @wiki, @response = @options[0], response
         requested = PageRequest.new(request.path)
         if requested.all_pages?
           render_all_pages
@@ -54,7 +54,7 @@ module Niki
       end
 
       def render_page_with_url(url)
-        @page = @niki.page_with_url(url)
+        @page = @wiki.page_with_url(url)
         @response.body = render :page
       end
     end

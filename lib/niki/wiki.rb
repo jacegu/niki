@@ -1,7 +1,7 @@
 require 'page'
 
 module Niki
-  class Niki
+  class Wiki
     attr_reader :pages
 
     def initialize

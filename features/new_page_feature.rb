@@ -1,7 +1,7 @@
 require 'feature_helper'
 require 'http_helper'
 
-feature 'Adding a Page to niki' do
+feature 'Adding a Page to the wiki' do
 
   describe 'new page form' do
     before do
@@ -21,18 +21,18 @@ feature 'Adding a Page to niki' do
       @page_content.must_match /<textarea.+name=('|")content('|")/i
     end
 
-    it 'renders an create niki button' do
+    it 'renders an create page button' do
       @page_content.must_match /<input.*type=('|")submit('|").+Create it/i
     end
   end
 
-  describe 'adding the page to niki' do
+  describe 'adding the page to the wiki' do
     describe 'a non empty title is provided' do
       it 'adds the page' do
         page_title = 'the page title'
         page_content = 'the page content'
         post '/new-page', {:title => page_title, :content => page_content}
-        last_page = @niki.pages.last
+        last_page = @wiki.pages.last
         last_page.title.must_equal page_title
         last_page.content.must_equal page_content
       end
