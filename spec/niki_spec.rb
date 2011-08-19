@@ -30,17 +30,18 @@ describe Niki do
     end
   end
 
-  describe '#page_entitled title' do
-    describe 'if a page with that title exists 'do
+  describe '#page_with_url url' do
+    describe 'if a page with that url exists 'do
       it 'returns that page' do
-        the_page_title = 'some title for the page'
-        the_page = Page.new(the_page_title)
-        @niki.add_page the_page
-        @niki.page_entitled(the_page_title).must_equal the_page
+        the_page_url = 'some-url'
+        the_page = stub
+        the_page.expect(:url, the_page_url)
+        @niki.add_page(the_page)
+        @niki.page_with_url(the_page_url).must_be_same_as the_page
       end
     end
 
-    describe 'if no page with that title exists' do
+    describe 'if no page with that url exists' do
       it 'returns a null page'
     end
   end

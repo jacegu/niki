@@ -15,7 +15,7 @@ class Niki
     pages.any?
   end
 
-  def page_entitled(title)
-    pages.select{ |p| p.title == title }.first
+  def page_with_url(url)
+    pages.select{ |p| p.url == url }.first
   end
 end
