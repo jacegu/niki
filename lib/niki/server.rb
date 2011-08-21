@@ -45,7 +45,7 @@ module Niki
         if requested.all_pages?
           render_all_pages
         else
-          render_page_with_url(requested.page_url)
+          render_page_with_url(requested.page_url, requested.action)
         end
       end
 
@@ -53,12 +53,20 @@ module Niki
         @response.body = render :index
       end
 
-      def render_page_with_url(url)
+      def render_page_with_url(url, action)
         @page = @wiki.page_with_url(url)
         if @page.found?
-          @response.body = render :page
+          render_action_for(@page, action)
         else
           render_not_found
+        end
+      end
+
+      def render_action_for(page, action)
+        case action
+        when :edit then @response.body = render :edit_page
+        when :show then @response.body = render :page
+        else render_not_found
         end
       end
 
