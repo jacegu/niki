@@ -14,9 +14,19 @@ module Niki
 
     def page_url
       if all_pages?
-        ''
+        return ''
       else
-        path.gsub("#{ALL_PAGES_PATH}/", '')
+        url_and_action = path.gsub("#{ALL_PAGES_PATH}/", '')
+        url_only = url_and_action.gsub(/\/.+$/,'')
+        return url_only
+      end
+    end
+
+    def action
+      if all_pages?
+        :none
+      else
+        path.gsub(/#{ALL_PAGES_PATH}\/#{page_url}\//, '').to_sym
       end
     end
   end
