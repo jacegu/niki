@@ -88,5 +88,5 @@ section#errors p {
   border-bottom-right-radius: 5px;
 }
 
-#new-niki input[type="text"], #new-niki textarea { width: 100%; }
-#new-niki textarea { height: 400px; }
+form.page input[type="text"], form.page textarea { width: 100%; }
+form.page textarea { height: 400px; }

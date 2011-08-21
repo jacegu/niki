@@ -12,16 +12,16 @@
 
     <section id="content">
       <h1>Editing <%= @page.title %></h1>
-      <form class="page" method='POST' action='/pages/<%= @page.url %>'>
-        <label for='title'>Title</label>
-        <input type='text' name='title' value="<%= @page.title %>" />
+      <form method="POST" action="/pages/<%= @page.url %>" class="page" >
+        <label for="title">Title</label>
+        <input type="text" name="title" value="<%= @page.title %>" />
 
-        <label for='content'>Content</label>
-        <textarea name='content'><%= @page.content %></textarea>
+        <label for="content">Content</label>
+        <textarea name="content"><%= @page.content %></textarea>
 
         <section class="actions">
           <a href="javascript:history.back();">Back</a>
-          <input type='submit' value='Save Changes' />
+          <input type="submit" value="Save Changes" />
         </section>
      </form>
     </section>
