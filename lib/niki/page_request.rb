@@ -3,6 +3,7 @@ module Niki
     attr_reader :path
 
     ALL_PAGES_PATH = '/pages'
+    DEFAULT_ACTION = :show
 
     def initialize(path)
       @path = path
@@ -24,9 +25,11 @@ module Niki
 
     def action
       if all_pages?
-        :none
+        return :none
       else
-        path.gsub(/#{ALL_PAGES_PATH}\/#{page_url}\//, '').to_sym
+        action = path.gsub(/#{ALL_PAGES_PATH}\/#{page_url}/, '')
+        action = action[1..-1] || DEFAULT_ACTION
+        return action.to_sym
       end
     end
   end

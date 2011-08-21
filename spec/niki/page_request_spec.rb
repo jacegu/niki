@@ -4,8 +4,6 @@ require 'page_request'
 module Niki
   describe PageRequest do
 
-    ALL_PAGES_PATH = '/pages'
-
     describe 'a new page request' do
       it 'is created with a path' do
         the_path = '/some-path'
@@ -16,7 +14,7 @@ module Niki
 
     describe '#all_pages?' do
       it 'returns true if requested path is "/pages"' do
-        requested = PageRequest.new(ALL_PAGES_PATH)
+        requested = PageRequest.new(PageRequest::ALL_PAGES_PATH)
         requested.all_pages?.must_equal true
       end
 
@@ -56,16 +54,26 @@ module Niki
     describe '#action' do
       describe 'if all pages were requested' do
         it 'returns "none" as requested action' do
-          requested = PageRequest.new(ALL_PAGES_PATH)
+          requested = PageRequest.new(PageRequest::ALL_PAGES_PATH)
           requested.action.must_equal :none
         end
       end
 
-      describe 'a particular page was requested' do
-        it 'returns the string after the requested page url as action' do
-          page_and_action = '/pages/the-page-url/action'
-          requested = PageRequest.new(page_and_action)
-          requested.action.must_equal :action
+      describe 'if a particular page was requested' do
+        describe 'if an action is specified after the page url' do
+          it 'returns the action' do
+            page_and_action = '/pages/the-page-url/action'
+            requested = PageRequest.new(page_and_action)
+            requested.action.must_equal :action
+          end
+        end
+
+        describe 'if no action was requested' do
+          it 'returns the default action (:show)' do
+            only_page = '/pages/the-page-url'
+            requested = PageRequest.new(only_page)
+            requested.action.must_equal :show
+          end
         end
       end
     end
