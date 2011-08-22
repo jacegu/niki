@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Edit <%= @page.title %></title>
+    <title>Edit <em><%= @page.title %></em></title>
      <link rel="stylesheet" type="text/css" href="/stylesheets/niki.css" />
   </head>
   <body>
@@ -20,7 +20,7 @@
         <textarea name="content"><%= @page.content %></textarea>
 
         <section class="actions">
-          <a href="javascript:history.back();">Back</a>
+          <a href="/pages">Back to page list</a>
           <input type="submit" value="Save Changes" />
         </section>
      </form>
