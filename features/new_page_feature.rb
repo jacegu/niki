@@ -28,13 +28,21 @@ feature 'Adding a Page to the wiki' do
 
   describe 'adding the page to the wiki' do
     describe 'a non empty title is provided' do
+      before do
+        @page_title = 'the page title'
+        @page_content = 'the page content'
+        @response = post '/new-page', {:title => @page_title, :content => @page_content}
+      end
+
       it 'adds the page' do
-        page_title = 'the page title'
-        page_content = 'the page content'
-        post '/new-page', {:title => page_title, :content => page_content}
         last_page = @wiki.pages.last
-        last_page.title.must_equal page_title
-        last_page.content.must_equal page_content
+        last_page.title.must_equal @page_title
+        last_page.content.must_equal @page_content
+      end
+
+      it 'renders edit page form' do
+        @response.code.must_equal '302'
+        @response.body.must_match '/the-page-title/edit'
       end
     end
 

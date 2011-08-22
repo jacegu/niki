@@ -89,9 +89,12 @@ module Niki
           response.body = render :new_page
         else
           page = Page.with(@title, @content)
-          niki.add_page page
+          niki.add_page(page)
+          edit_page_url = "#{PageRequest::ALL_PAGES_PATH}/#{page.url}/edit"
+          response.set_redirect(WEBrick::HTTPStatus::Found, edit_page_url)
         end
       end
     end
+
   end
 end
