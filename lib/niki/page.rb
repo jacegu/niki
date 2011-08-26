@@ -1,7 +1,6 @@
 module Niki
   class Page
-    attr_reader :title
-    attr_accessor :content
+    attr_accessor :title, :content
 
     def self.with(title, content)
       page = Page.new(title)

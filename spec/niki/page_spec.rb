@@ -20,6 +20,15 @@ module Niki
       end
     end
 
+    describe '#title=' do
+      it 'updates the title of the page' do
+        the_page_title = 'the new title of the page'
+        page = Page.new('old title')
+        page.title = the_page_title
+        page.title.must_equal the_page_title
+      end
+    end
+
     describe '#content=' do
       it 'sets the content of the page' do
         the_page_content = 'the content for the page'
