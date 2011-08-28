@@ -73,6 +73,24 @@ module Niki
       def render_not_found
         raise WEBrick::HTTPStatus::NotFound
       end
+
+      def do_POST(request, response)
+        @wiki, @request, @response = @options[0], request, response
+        requested = PageRequest.new(request.path)
+        update_page_with_url(requested.page_url)
+      end
+
+      def update_page_with_url(url)
+        @page = @wiki.page_with_url(url)
+        @page.title = @request.query['title']
+        @page.content = @request.query['content']
+        ExistingPageServlet.redirect_to_edit(@page, @response)
+      end
+
+      def self.redirect_to_edit(page, response)
+        edit_page_url = "#{PageRequest::ALL_PAGES_PATH}/#{page.url}/edit"
+        response.set_redirect(WEBrick::HTTPStatus::Found, edit_page_url)
+      end
     end
 
     class NewPageServlet < HTTPServlet::AbstractServlet
@@ -90,8 +108,7 @@ module Niki
         else
           page = Page.with(@title, @content)
           niki.add_page(page)
-          edit_page_url = "#{PageRequest::ALL_PAGES_PATH}/#{page.url}/edit"
-          response.set_redirect(WEBrick::HTTPStatus::Found, edit_page_url)
+          ExistingPageServlet.redirect_to_edit(page, response)
         end
       end
     end

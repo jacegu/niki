@@ -41,6 +41,8 @@ input[type="submit"]:hover {
   background: #ff4545;
 }
 
+em { font-style: italic; }
+
 section#content {
   width: 760px;
   margin: 80px auto;
@@ -89,4 +91,4 @@ section#errors p {
 }
 
 form.page input[type="text"], form.page textarea { width: 100%; }
-form.page textarea { height: 400px; }
+form.page textarea { height: 350px; }

@@ -52,4 +52,28 @@ feature "An existing wiki page" do
     end
   end
 
+  describe 'updating an existing page' do
+    before do
+      @wiki.add_page Niki::Page.with('some title', 'some content')
+      @updated_title = "Updated page's title"
+      @updated_content = "Updated page's content"
+      @response = post '/pages/some-title', {:title => @updated_title, :content => @updated_content}
+      @updated_page = @wiki.page_with_url('updated-pages-title')
+    end
+
+    it "updates the page's title" do
+      @updated_page.title.must_equal @updated_title
+    end
+
+    it "updates the page's content" do
+      @updated_page.content.must_equal @updated_content
+    end
+
+    it 'rendirects to the edit page' do
+      @response.code.must_equal '302'
+      @response.body.must_match /\/pages\/updated-pages-title\/edit/
+    end
+
+    it 'prompts a page sucessfully updated message'
+  end
 end
