@@ -4,9 +4,13 @@
      <link rel="stylesheet" type="text/css" href="/stylesheets/niki.css" />
    </head>
    <body>
-     <section id="content">
-     <h1><%= @page.title %></h1>
-      <%= @page.content %>
+     <section id="content" class="display-page">
+       <h1><%= @page.title %></h1>
+        <%= @page.content %>
+
+       <section class="actions">
+         <a href="/pages/<%= @page.url %>/edit">Edit page</a>
+       </section>
      </section>
    </body>
  </html>

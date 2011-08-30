@@ -84,12 +84,12 @@ module Niki
         @page = @wiki.page_with_url(url)
         @page.title = @request.query['title']
         @page.content = @request.query['content']
-        ExistingPageServlet.redirect_to_edit(@page, @response)
+        ExistingPageServlet.redirect_to_page(@page, @response)
       end
 
-      def self.redirect_to_edit(page, response)
-        edit_page_url = "#{PageRequest::ALL_PAGES_PATH}/#{page.url}/edit"
-        response.set_redirect(WEBrick::HTTPStatus::Found, edit_page_url)
+      def self.redirect_to_page(page, response)
+        page_url = "#{PageRequest::ALL_PAGES_PATH}/#{page.url}"
+        response.set_redirect(WEBrick::HTTPStatus::Found, page_url)
       end
     end
 
@@ -108,7 +108,7 @@ module Niki
         else
           page = Page.with(@title, @content)
           niki.add_page(page)
-          ExistingPageServlet.redirect_to_edit(page, response)
+          ExistingPageServlet.redirect_to_page(page, response)
         end
       end
     end

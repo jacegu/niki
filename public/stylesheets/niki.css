@@ -48,6 +48,8 @@ section#content {
   margin: 80px auto;
 }
 
+section#content.display-page { font-weight: 100; }
+
 p#disclaimer {
   position: absolute;
   top: 20px;

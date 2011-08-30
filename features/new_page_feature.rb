@@ -42,7 +42,7 @@ feature 'Adding a Page to the wiki' do
 
       it 'renders edit page form' do
         @response.code.must_equal '302'
-        @response.body.must_match '/the-page-title/edit'
+        @response.body.must_match '/the-page-title'
       end
     end
 
