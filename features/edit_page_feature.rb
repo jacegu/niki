@@ -1,9 +1,9 @@
 require 'feature_helper'
 require 'http_helper'
 
-feature "Showing an existing wiki page" do
+feature "Editing an existing wiki page" do
 
-  describe 'editing an existing page' do
+  describe 'the page to edit an existing wiki page' do
     before do
       @page_title = 'Testing page'
       @page_content = "Content\nfor\nthis\npage"
@@ -33,24 +33,42 @@ feature "Showing an existing wiki page" do
   describe 'updating an existing page' do
     before do
       @wiki.add_page Niki::Page.with('some title', 'some content')
-      @updated_title = "Updated page's title"
-      @updated_content = "Updated page's content"
-      @response = post '/pages/some-title', {:title => @updated_title, :content => @updated_content}
-      @updated_page = @wiki.page_with_url('updated-pages-title')
     end
 
-    it "updates the page's title" do
-      @updated_page.title.must_equal @updated_title
+    describe 'with valid data' do
+      before do
+        @updated_title = "Updated page's title"
+        @updated_content = "Updated page's content"
+        @response = post '/pages/some-title', {:title => @updated_title, :content => @updated_content}
+        @updated_page = @wiki.page_with_url('updated-pages-title')
+      end
+
+      it "updates the page's title" do
+        @updated_page.title.must_equal @updated_title
+      end
+
+      it "updates the page's content" do
+        @updated_page.content.must_equal @updated_content
+      end
+
+      it 'rendirects to the updated page' do
+        @response.code.must_equal '302'
+        @response.body.must_match /\/pages\/updated-pages-title/
+      end
     end
 
-    it "updates the page's content" do
-      @updated_page.content.must_equal @updated_content
-    end
+    describe 'with invalid data' do
+      describe 'update de title to an empty string' do
+        before do
+          @updated_title = '   '
+          @response = post '/pages/some-title', {:title => @updated_title}
+          @updated_page = @wiki.page_with_url('updated-pages-title')
+        end
 
-    it 'rendirects to the page' do
-      @response.code.must_equal '302'
-      @response.body.must_match /\/pages\/updated-pages-title/
+        it 'prompts an invalid title error' do
+          @response.body.must_match /must have a title/
+        end
+      end
     end
   end
-
 end

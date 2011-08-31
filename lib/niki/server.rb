@@ -82,9 +82,15 @@ module Niki
 
       def update_page_with_url(url)
         @page = @wiki.page_with_url(url)
-        @page.title = @request.query['title']
-        @page.content = @request.query['content']
-        ExistingPageServlet.redirect_to_page(@page, @response)
+        new_title = @request.query['title']
+        if new_title.nil? or new_title.strip.empty?
+          @error_message = 'every niki must have a title'
+          @response.body = render :edit_page
+        else
+          @page.title = new_title
+          @page.content = @request.query['content']
+          ExistingPageServlet.redirect_to_page(@page, @response)
+        end
       end
 
       def self.redirect_to_page(page, response)
