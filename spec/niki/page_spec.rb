@@ -90,6 +90,19 @@ module Niki
       end
     end
 
+    describe '::would_be_valid_with_title? title' do
+      describe 'if the title contains at least an alphanumeric character' do
+        it 'returns true' do
+          Page.would_be_valid_with_title?('some title').must_equal true
+        end
+      end
+
+      describe 'if the title does not contain an alphanumeric character' do
+        it 'returns false' do
+          Page.would_be_valid_with_title?('    ').must_equal false
+        end
+      end
+    end
   end
 
   describe NullPage do

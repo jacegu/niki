@@ -26,6 +26,10 @@ module Niki
     def to_s
       title
     end
+
+    def self.would_be_valid_with_title?(title)
+      not title.nil? and not title.strip.empty?
+    end
   end
 
   class NullPage < Page
