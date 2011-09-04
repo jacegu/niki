@@ -36,6 +36,15 @@ module Niki
 
     class HTTPServlet::AbstractServlet
       include Renderer
+
+      def render_not_found
+        raise WEBrick::HTTPStatus::NotFound
+      end
+
+      def redirect_to_page(page, response)
+        page_url = "#{PageRequest::ALL_PAGES_PATH}/#{page.url}"
+        response.set_redirect(WEBrick::HTTPStatus::Found, page_url)
+      end
     end
 
     class ExistingPageServlet < HTTPServlet::AbstractServlet
@@ -47,6 +56,12 @@ module Niki
         else
           render_page_with_url(requested.page_url, requested.action)
         end
+      end
+
+      def do_POST(request, response)
+        @wiki, @request, @response = @options[0], request, response
+        requested = PageRequest.new(request.path)
+        update_page_with_url(requested.page_url)
       end
 
       def render_all_pages
@@ -70,32 +85,17 @@ module Niki
         end
       end
 
-      def render_not_found
-        raise WEBrick::HTTPStatus::NotFound
-      end
-
-      def do_POST(request, response)
-        @wiki, @request, @response = @options[0], request, response
-        requested = PageRequest.new(request.path)
-        update_page_with_url(requested.page_url)
-      end
-
       def update_page_with_url(url)
         @page = @wiki.page_with_url(url)
         new_title = @request.query['title']
         if Page.would_be_valid_with_title?(new_title)
           @page.title = new_title
           @page.content = @request.query['content']
-          ExistingPageServlet.redirect_to_page(@page, @response)
+          redirect_to_page(@page, @response)
         else
-          @error_message = 'every niki must have a title'
+          @error_message = 'every page must have a title'
           @response.body = render :edit_page
         end
-      end
-
-      def self.redirect_to_page(page, response)
-        page_url = "#{PageRequest::ALL_PAGES_PATH}/#{page.url}"
-        response.set_redirect(WEBrick::HTTPStatus::Found, page_url)
       end
     end
 
@@ -111,7 +111,7 @@ module Niki
         if Page.would_be_valid_with_title?(@title)
           page = Page.with(@title, @content)
           niki.add_page(page)
-          ExistingPageServlet.redirect_to_page(page, response)
+          redirect_to_page(page, response)
         else
           @error_message = 'every niki must have a title'
           response.body = render :new_page
