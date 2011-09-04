@@ -22,6 +22,10 @@ feature "Showing an existing wiki page" do
     it 'renders an edit page link' do
       @page_html.must_match /<a.+href=("|')\/pages\/testing-page\/edit("|')/i
     end
+
+    it 'renders a back to page list link' do
+      @page_html.must_match /<a.+href=("|')\/pages("|')/i
+    end
   end
 
   describe 'requested page does not exist' do

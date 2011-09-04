@@ -28,6 +28,10 @@ feature "Editing an existing wiki page" do
     it 'renders a save changes button' do
       @page_html.must_match /<input.*type=('|")submit('|").+Save Changes/i
     end
+
+    it 'renders a back to page list link' do
+      @page_html.must_match /<a.+href=("|')\/pages("|')/i
+    end
   end
 
   describe 'updating an existing page' do

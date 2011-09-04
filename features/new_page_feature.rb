@@ -24,6 +24,10 @@ feature 'Adding a Page to the wiki' do
     it 'renders an create page button' do
       @page_content.must_match /<input.*type=('|")submit('|").+Create it/i
     end
+
+    it 'renders a back to page list link' do
+      @page_content.must_match /<a.+href=("|')\/pages("|')/i
+    end
   end
 
   describe 'adding the page to the wiki' do
