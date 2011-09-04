@@ -83,13 +83,13 @@ module Niki
       def update_page_with_url(url)
         @page = @wiki.page_with_url(url)
         new_title = @request.query['title']
-        if new_title.nil? or new_title.strip.empty?
-          @error_message = 'every niki must have a title'
-          @response.body = render :edit_page
-        else
+        if Page.would_be_valid_with_title?(new_title)
           @page.title = new_title
           @page.content = @request.query['content']
           ExistingPageServlet.redirect_to_page(@page, @response)
+        else
+          @error_message = 'every niki must have a title'
+          @response.body = render :edit_page
         end
       end
 
@@ -108,13 +108,13 @@ module Niki
         niki = @options[0]
         @title = request.query['title']
         @content = request.query['content']
-        if @title.nil? or @title.empty?
-          @error_message = 'every niki must have a title'
-          response.body = render :new_page
-        else
+        if Page.would_be_valid_with_title?(@title)
           page = Page.with(@title, @content)
           niki.add_page(page)
           ExistingPageServlet.redirect_to_page(page, response)
+        else
+          @error_message = 'every niki must have a title'
+          response.body = render :new_page
         end
       end
     end
