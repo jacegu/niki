@@ -11,12 +11,14 @@ module Niki
         end.join("\n")
       end
 
+      private
+
       def render_paragraph_in(line)
         "<p>#{line}</p>"
       end
 
       def render_links_in(line)
-        if link = line.match(/\[([a-z]|[0-9]|\s)+\]/i)
+        if link = line.match(Link::AS_REGEXP)
           "#{line.gsub(link.to_s, Link.new(link, @wiki)}#{render_links_in(link.post_match)}"
         else
           line
@@ -25,6 +27,8 @@ module Niki
     end
 
     class Link
+      AS_REGEXP = /\[([a-z]|[0-9]|\s)+\]/i
+
       def initialize(link, wiki)
         @link, @wiki = link.to_s, wiki
       end
