@@ -9,7 +9,8 @@ module Niki
         niki = @options[0]
         @title, @content  = request.query['title'], request.query['content']
         if Page.would_be_valid_with_title?(@title)
-          niki.add_page(Page.with(@title, @content))
+          page = Page.with(@title, @content)
+          niki.add_page(page)
           redirect_to_page(page, response)
         else
           @error_message = 'every niki must have a title'

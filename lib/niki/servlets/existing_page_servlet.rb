@@ -1,5 +1,6 @@
 require 'webrick'
 require 'niki/page_request'
+require 'niki/rendered_page'
 
 module Niki
   module Servlets
@@ -38,8 +39,12 @@ module Niki
 
       def render_action_for(page, action)
         case action
-        when :edit then @response.body = render :edit_page
-        when :show then @response.body = render :page
+        when :edit then
+          @response.body = render :edit_page
+        when :show then
+          @page = RenderedPage.new(@page, @wiki)
+          puts @page
+          @response.body = render :page
         else render_not_found
         end
       end
