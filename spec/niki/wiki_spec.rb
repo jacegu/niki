@@ -50,5 +50,24 @@ module Niki
         end
       end
     end
+
+    describe '#page_with_title url' do
+      describe 'if a page with that title exists 'do
+        it 'returns that page' do
+          the_page_title = 'the title'
+          the_page = stub
+          the_page.expect(:title, the_page_title)
+          @wiki.add_page(the_page)
+          @wiki.page_with_title(the_page_title).must_be_same_as the_page
+        end
+      end
+
+      describe 'if no page with that title exists' do
+        it 'returns a null page' do
+          the_page = @wiki.page_with_title('does not exist')
+          the_page.class.must_equal NullPage
+        end
+      end
+    end
   end
 end
