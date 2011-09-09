@@ -16,10 +16,8 @@ module Niki
       end
 
       def render_links_in(line)
-        matched_link = line.match(/\[([a-z]|[0-9]|\s)+\]/i)
-        if matched_link
-          link = Link.new(matched_link, @wiki)
-          "#{line.gsub(matched_link.to_s, link.to_html)}#{render_links_in(matched_link.post_match)}"
+        if link = line.match(/\[([a-z]|[0-9]|\s)+\]/i)
+          "#{line.gsub(link.to_s, Link.new(link, @wiki)}#{render_links_in(link.post_match)}"
         else
           line
         end
@@ -35,7 +33,7 @@ module Niki
         @link.to_s[1..-2]
       end
 
-      def to_html
+      def to_s
         page = @wiki.page_with_title(title_of_linked_page)
         if page.found?
           "<a href=\"/pages/#{page.url}\">#{page.title}</a>"
