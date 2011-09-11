@@ -3,35 +3,34 @@ require 'http_helper'
 
 feature 'Adding a Page to the wiki' do
 
-  describe 'new page form' do
+  describe 'rendering the form to add new page' do
     before do
-      response = get '/new-page'
-      @page_content = response.body
+      @response = get '/new-page'
     end
 
     it 'renders a form for the new page data' do
-      @page_content.must_match /<form.+method=('|")POST('|").+action=('|")\/new-page('|")/i
+      @response.body.must_match /<form.+method=('|")POST('|").+action=('|")\/new-page('|")/i
     end
 
     it 'renders a field for the page title' do
-      @page_content.must_match /<input.+name=('|")title('|")/i
+      @response.body.must_match /<input.+name=('|")title('|")/i
     end
 
     it 'renders a field for the page content' do
-      @page_content.must_match /<textarea.+name=('|")content('|")/i
+      @response.body.must_match /<textarea.+name=('|")content('|")/i
     end
 
     it 'renders an create page button' do
-      @page_content.must_match /<input.*type=('|")submit('|").+Create it/i
+      @response.body.must_match /<input.*type=('|")submit('|").+Create it/i
     end
 
     it 'renders a back to page list link' do
-      @page_content.must_match /<a.+href=("|')\/pages("|')/i
+      @response.body.must_match /<a.+href=("|')\/pages("|')/i
     end
   end
 
   describe 'adding the page to the wiki' do
-    describe 'a non empty title is provided' do
+    describe 'if a non empty title is provided and no page with the given title exists' do
       before do
         @page_title = 'the page title'
         @page_content = 'the page content'
@@ -44,13 +43,13 @@ feature 'Adding a Page to the wiki' do
         last_page.content.must_equal @page_content
       end
 
-      it 'renders edit page form' do
+      it 'renders the edit page form for the added page' do
         @response.code.must_equal '302'
         @response.body.must_match '/the-page-title'
       end
     end
 
-    describe 'the title is not provided' do
+    describe 'if the title is not provided (empty)' do
       before do
         @written_content = 'some content'
         @response = post '/new-page', {:content => @written_content}
@@ -65,20 +64,8 @@ feature 'Adding a Page to the wiki' do
       end
     end
 
-    describe 'the title is provided but is empty' do
-      before do
-        @written_content = 'some content'
-        @response = post '/new-page', {:title => '', :content => @written_content}
-      end
-
-      it 'prompts an error message if the title is empty' do
-        @response.body.must_match /must have a title/
-      end
-
-      it 'mantains written content if the title is empty ' do
-        @response.body.must_match /#{@written_content}/
-      end
+    describe 'if another page with the same title exists' do
     end
-  end
 
+  end
 end
