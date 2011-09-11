@@ -12,8 +12,10 @@ module Niki
 
     def initialize(wiki, port = 8583)
       @server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => PUBLIC_DIR)
+
       @server.mount '/new-page', NewPageServlet,      wiki
       @server.mount '/pages',    ExistingPageServlet, wiki
+
       trap('INT'){ stop }
     end
 

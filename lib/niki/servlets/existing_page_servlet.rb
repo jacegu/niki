@@ -43,7 +43,6 @@ module Niki
           @response.body = render :edit_page
         when :show then
           @page = RenderedPage.new(@page, @wiki)
-          puts @page
           @response.body = render :page
         else render_not_found
         end

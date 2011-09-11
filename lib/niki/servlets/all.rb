@@ -12,8 +12,11 @@ module Niki
       end
 
       def redirect_to_page(page, response)
-        page_url = "#{PageRequest::ALL_PAGES_PATH}/#{page.url}"
-        response.set_redirect(WEBrick::HTTPStatus::Found, page_url)
+        response.set_redirect(WEBrick::HTTPStatus::Found, full_url_to_page(page))
+      end
+
+      def full_url_to_page(page)
+        "#{PageRequest::ALL_PAGES_PATH}/#{page.url}"
       end
     end
   end
