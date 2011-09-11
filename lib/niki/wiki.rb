@@ -17,22 +17,11 @@ module Niki
     end
 
     def page_with_url(url)
-      page = pages.select{ |p| p.url == url }.first
-      null_page_unless page
+      pages.select{ |p| p.url == url }.first || NullPage.new
     end
 
     def page_with_title(title)
-      page = pages.select{ |p| p.title == title }.first
-      null_page_unless page
+      pages.select{ |p| p.title == title }.first || NullPage.new
     end
-
-    private
-      def null_page_unless(page)
-        if page
-          page
-        else
-          NullPage.new
-        end
-      end
   end
 end
