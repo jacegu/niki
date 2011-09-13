@@ -51,7 +51,7 @@ module Niki
       end
     end
 
-    describe '#page_with_title url' do
+    describe '#page_with_title title' do
       describe 'if a page with that title exists 'do
         it 'returns that page' do
           the_page_title = 'the title'
@@ -68,6 +68,18 @@ module Niki
           the_page.class.must_equal NullPage
         end
       end
+    end
+
+    describe '#has_a_page_with_title title' do
+      it 'returns true if has a page with that title' do
+        the_title = 'the title'
+        @wiki.add_page Page.new(the_title)
+        @wiki.has_a_page_with_title?(the_title).must_equal true
+      end
+
+      #it 'returns false if it does not have a page with that title' do
+
+      #end
     end
   end
 end

@@ -16,6 +16,10 @@ module Niki
       pages.any?
     end
 
+    def has_a_page_with_title?(title)
+      page_with_title(title).found?
+    end
+
     def page_with_url(url)
       pages.select{ |p| p.url == url }.first || NullPage.new
     end
