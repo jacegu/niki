@@ -68,7 +68,7 @@ feature 'Adding a Page to the wiki' do
       before do
         @titile = 'The Title'
         @content = 'some content'
-        @wiki.add_page Niki::Page.with(@title, @content)
+        @wiki.add_page Niki::Page.new(@title)
         @response = post '/new-page', {:title => @title, :content => @content}
       end
 

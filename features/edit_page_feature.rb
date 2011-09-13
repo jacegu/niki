@@ -73,6 +73,28 @@ feature "Editing an existing wiki page" do
           @response.body.must_match /must have a title/
         end
       end
+
+
+      describe 'updating title to the title of an existing page' do
+        before do
+          @updated_title = 'The Title'
+          @updated_content = 'some content'
+          @wiki.add_page Niki::Page.new(@updated_title)
+          @response = post '/pages/some-title', {:title => @updated_title, :content => @updated_content}
+        end
+
+        it 'prompts an error message' do
+          @response.body.must_match /title .* must be different from other pages'/
+        end
+
+        it 'mantains the updated title' do
+          @response.body.must_match /#{@updated_title}/
+        end
+
+        it 'mantains the updated content' do
+          @response.body.must_match /#{@updated_content}/
+        end
+      end
     end
   end
 end

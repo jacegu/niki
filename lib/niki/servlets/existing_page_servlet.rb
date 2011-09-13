@@ -40,6 +40,7 @@ module Niki
       def render_action_for(page, action)
         case action
         when :edit then
+          @title, @content = @page.title, @page.content
           @response.body = render :edit_page
         when :show then
           @page = RenderedPage.new(@page, @wiki)
@@ -50,15 +51,30 @@ module Niki
 
       def update_page_with_url(url)
         @page = @wiki.page_with_url(url)
-        new_title = @request.query['title']
-        if Page.would_be_valid_with_title?(new_title)
-          @page.title = new_title
-          @page.content = @request.query['content']
-          redirect_to_page(@page, @response)
+        @title, @content  = @request.query['title'], @request.query['content']
+        if Page.would_be_valid_with_title?(@title) and
+           there_is_no_other_page_entitled?(@title, @page)
+          update_page
         else
-          @error_message = 'every page must have a title'
-          @response.body = render :edit_page
+          prompt_error
         end
+      end
+
+      private
+
+      def there_is_no_other_page_entitled?(title, page)
+        (not @wiki.has_a_page_with_title?(title)) or @wiki.page_with_title(title) == page
+      end
+
+      def update_page
+        @page.title = @title
+        @page.content = @content
+        redirect_to_page(@page, @response)
+      end
+
+      def prompt_error
+        @error_message = "every page must have a title and it must be different from other pages'"
+        @response.body = render :edit_page
       end
     end
 

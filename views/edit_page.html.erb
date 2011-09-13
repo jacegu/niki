@@ -14,10 +14,10 @@
       <h1>Editing <em><%= @page.title %></em></h1>
       <form method="POST" action="/pages/<%= @page.url %>" class="page" >
         <label for="title">Title</label>
-        <input type="text" name="title" value="<%= @page.title %>" />
+        <input type="text" name="title" value="<%= @title %>" />
 
         <label for="content">Content</label>
-        <textarea name="content"><%= @page.content %></textarea>
+        <textarea name="content"><%= @content %></textarea>
 
         <section class="actions">
           <a href="/pages">Back to page list</a>
