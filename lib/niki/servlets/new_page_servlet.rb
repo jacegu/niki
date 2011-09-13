@@ -6,17 +6,28 @@ module Niki
       end
 
       def do_POST(request, response)
-        niki = @options[0]
+        wiki =  @options[0]
         @title, @content  = request.query['title'], request.query['content']
-        if Page.would_be_valid_with_title?(@title)
-          page = Page.with(@title, @content)
-          niki.add_page(page)
-          redirect_to_page(page, response)
+        if Page.would_be_valid_with_title?(@title) and
+           not wiki.has_a_page_with_title?(@title)
+          create_the_page(wiki, response)
         else
-          @error_message = 'every niki must have a title'
-          response.body = render :new_page
+          prompt_error(response)
         end
       end
+
+      private
+
+        def create_the_page(wiki, response)
+          page = Page.with(@title, @content)
+          wiki.add_page(page)
+          redirect_to_page(page, response)
+        end
+
+        def prompt_error(response)
+          @error_message = "every page must have a title and it must be different from other pages'"
+          response.body = render :new_page
+        end
     end
   end
 end

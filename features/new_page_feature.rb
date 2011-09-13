@@ -51,21 +51,38 @@ feature 'Adding a Page to the wiki' do
 
     describe 'if the title is not provided (empty)' do
       before do
-        @written_content = 'some content'
-        @response = post '/new-page', {:content => @written_content}
+        @content = 'some content'
+        @response = post '/new-page', {:content => @content}
       end
 
-      it 'prompts an error message if no title was given' do
+      it 'prompts an error message' do
         @response.body.must_match /must have a title/
       end
 
-      it 'mantains the written content if no title is provided' do
-        @response.body.must_match /#{@written_content}/
+      it 'mantains the written content' do
+        @response.body.must_match /#{@content}/
       end
     end
 
     describe 'if another page with the same title exists' do
-    end
+      before do
+        @titile = 'The Title'
+        @content = 'some content'
+        @wiki.add_page Niki::Page.with(@title, @written_content)
+        @response = post '/new-page', {:title => @title, :content => @content}
+      end
 
+      it 'prompts an error message' do
+        @response.body.must_match /title .* must be different from other pages'/
+      end
+
+      it 'mantains the written title' do
+        @response.body.must_match /#{@title}/
+      end
+
+      it 'mantains the written content' do
+        @response.body.must_match /#{@content}/
+      end
+    end
   end
 end

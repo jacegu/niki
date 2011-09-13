@@ -14,7 +14,7 @@
       <h1>Create a new niki</h1>
       <form method="POST" action="/new-page" class="page">
         <label for="title">Title</label>
-        <input type="text" name="title"></input>
+        <input type="text" name="title"><%= @title %></input>
 
         <label for="content">Content</label>
         <textarea name="content"><%= @content %></textarea>
