@@ -1,4 +1,4 @@
-require 'content'
+require 'niki/content'
 
 module Niki
   class RenderedPage < Page
