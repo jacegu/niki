@@ -18,7 +18,7 @@ module Niki
 
     def render_links_in(line)
       if link = line.match(Link::AS_REGEXP)
-        "#{line.gsub(link.to_s, Link.new(link, @wiki).to_s)}#{render_links_in(link.post_match)}"
+        "#{link.pre_match}#{Link.new(link, @wiki)}#{render_links_in(link.post_match)}"
       else
         line
       end
@@ -34,8 +34,7 @@ module Niki
 
     def title_of_linked_page
       @link.to_s[1..-2]
-    end
-
+    end 
     def to_s
       page = @wiki.page_with_title(title_of_linked_page)
       if page.found?
