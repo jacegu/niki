@@ -60,6 +60,10 @@ module Niki
           @wiki.add_page(the_page)
           @wiki.page_with_title(the_page_title).must_be_same_as the_page
         end
+
+        it 'returns that page even if it has diferent cased words' do
+
+        end
       end
 
       describe 'if no page with that title exists' do
@@ -77,9 +81,9 @@ module Niki
         @wiki.has_a_page_with_title?(the_title).must_equal true
       end
 
-      #it 'returns false if it does not have a page with that title' do
-
-      #end
+      it 'returns false if it does not have a page with that title' do
+        @wiki.has_a_page_with_title?('something').must_equal false
+      end
     end
   end
 end
