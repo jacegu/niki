@@ -1,12 +1,16 @@
+require 'erb'
+
 module Niki
   class Content
+    include ERB::Util
+
     def initialize(content, wiki)
       @content, @wiki = content, wiki
     end
 
     def to_html
       @content.split("\n").map do |line|
-        render_paragraph_in(render_links_in(line))
+        render_paragraph_in(render_links_in(html_escape(line)))
       end.join("\n")
     end
 
@@ -34,7 +38,8 @@ module Niki
 
     def title_of_linked_page
       @link.to_s[1..-2]
-    end 
+    end
+
     def to_s
       page = @wiki.page_with_title(title_of_linked_page)
       if page.found?

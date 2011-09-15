@@ -3,6 +3,14 @@ require 'http_helper'
 
 feature 'Rendering the content of a wiki page' do
 
+  describe 'sanitizing HTML' do
+    it 'escapes every HTML tag in the page content' do
+      @wiki.add_page Niki::Page.with('page', "<h1>this should be sanitized</h1>")
+      response = get '/pages/page'
+      response.body.must_match /&lt;h1&gt;this should be sanitized&lt;\/h1&gt;/i
+    end
+  end
+
   describe 'paragraph rendering' do
     it 'wraps paragraphs with <p></p> tags' do
       @wiki.add_page Niki::Page.with('page1', "some\ncontent")
