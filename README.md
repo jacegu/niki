@@ -15,15 +15,15 @@ The wiki is named after a beloved friend who has helped me a lot. Thanks Nikisof
 Features
 --------
 The set of features of the blog is small: this is supposed to be an MVP wiki.
-   - You can check the avaliable pages list
-   - You can add new pages
-   - You can see an existing page
-   - You can edit an existing page
+-   You can check the avaliable pages list
+-   You can add new pages
+-   You can see an existing page
+-   You can edit an existing page
 
 Regarding the page content the set of features you have available is:
-   - **HMTL safe content:** if you write HTML in the wiki it won't be interpreted by the browser.
-   - **Paragraphs:** if you split your page content in paragraphs Niki will respect that structure.
-   - **Linking other** niki pages: You can create a link to other pages in the wiki by using the syntax *[the title of the page]*. Keep in mind that niki is case sansitive so a page entitled *page title* is different from *Page title*.
+-   **HMTL safe content:** if you write HTML in the wiki it won't be interpreted by the browser.
+-   **Paragraphs:** if you split your page content in paragraphs Niki will respect that structure.
+-   **Linking other** niki pages: You can create a link to other pages in the wiki by using the syntax *[the title of the page]*. Keep in mind that niki is case sansitive so a page entitled *page title* is different from *Page title*.
 
 
 A page example
