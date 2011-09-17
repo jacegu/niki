@@ -9,7 +9,8 @@ module Niki
     end
 
     def to_html
-      @content.split("\n").map do |line|
+      non_empty_lines = @content.split(/\n|\r/m).reject{ |line| line.strip.empty? }
+      non_empty_lines.map do |line|
         render_paragraph_in(render_links_in(html_escape(line)))
       end.join("\n")
     end
@@ -17,11 +18,7 @@ module Niki
     private
 
     def render_paragraph_in(line)
-      if line.empty?
-        ""
-      else
-        "<p>#{line}</p>"
-      end
+      "<p>#{line}</p>"
     end
 
     def render_links_in(line)
