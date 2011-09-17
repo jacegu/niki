@@ -15,7 +15,13 @@ feature 'Rendering the content of a wiki page' do
     it 'wraps paragraphs with <p></p> tags' do
       @wiki.add_page Niki::Page.with('page1', "some\ncontent")
       response = get '/pages/page1'
-      response.body.must_match /<p>some<\/p>.*<p>content<\/p>/m
+      response.body.must_match /<p>some<\/p>\n<p>content<\/p>/m
+    end
+
+    it 'does not wrap empty lines' do
+      @wiki.add_page Niki::Page.with('page1', "some\n\ncontent")
+      response = get '/pages/page1'
+      response.body.must_match /<p>some<\/p>\n\n<p>content<\/p>/m
     end
   end
 

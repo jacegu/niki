@@ -17,7 +17,11 @@ module Niki
     private
 
     def render_paragraph_in(line)
-      "<p>#{line}</p>"
+      if line.empty?
+        ""
+      else
+        "<p>#{line}</p>"
+      end
     end
 
     def render_links_in(line)
