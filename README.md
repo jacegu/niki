@@ -28,12 +28,12 @@ Regarding the page content the set of features you have available is:
 
 - **HMTL safe content:** if you write HTML in the wiki it won't be interpreted by the browser.
 - **Paragraphs:** if you split your page content in paragraphs Niki will respect that structure.
-- **Linking other niki pages**: You can create a link to other pages in the wiki by using the syntax *[the title of the page]*. Keep in mind that niki is case sansitive so a page entitled *page title* is different from *Page title*.
+- **Linking other niki pages**: You can create a link to other pages in the wiki by using the syntax `[the title of the page]`. Keep in mind that niki is case sansitive so a page entitled `page title` is different from `Page title`.
 
 
 A page example
 -------------
-Given **a page entitled "ipsum" exists**, a niki page with the content
+Given **a page entitled _ipsum_ exists**, a niki page with the content
 
     Lorem [ipsum] dolor sit amet, consectetur adipiscing elit. Cras risus est, ultrices a tristique at, bibendum vel purus. Duis
     porttitor rutrum mauris, a accumsan leo auctor accumsan. Nulla aliquet fermentum nisl, vitae rutrum sapien imperdiet a.
@@ -59,6 +59,8 @@ would be rendered to
 
 Testing
 -------
-This time I was allowed to use a testing framework as long as it was part of the Ruby Standard Library. I chosed MiniTest to take advantage of its BDD syntax a la RSpec.
+This time I was allowed to use a testing framework as long as it was part of the Ruby Standard Library. I choosed MiniTest to take advantage of its BDD syntax a la RSpec.
 
 To be able to integration test the wiki I also used MiniTest. I extended the `MiniTest::Unit::TestCase` class with the `get` and `post` methods to be able to navigate the app. In order to DRY-up the starting and stoping of WEBRick in tests I created a `feature` helper. This helper creates a MiniTest especification with the starting and stopping of the server as its `before` and `after` blocks.
+
+
