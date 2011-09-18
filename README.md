@@ -7,11 +7,13 @@ Niki is my first task as @ecomba's apprentice. I have to develop a wiki using on
 
 This is pretty close to [the challenge](http://github.com/jacegu/apprentice_challenge) I had to pass to [become apprentice](http://ecomba.org/blog/2011/05/15/the-apprentice/). The main difference is that I can use a test framework as long as it is part of the standard library.
 
+
 The name
 --------
 The wiki is named after a beloved friend who has helped me a lot. Thanks Nikisoftware :·)
 
-![Nikisoftware by @sbastn](http://kinisoftware.com/wp-content/uploads/2011/07/kini-02.png]
+
+![Nikisoftware by @sbastn](http://kinisoftware.com/wp-content/uploads/2011/07/kini-02.png "Nikisoftware by @sebastn")
 
 Features
 --------
@@ -57,8 +59,6 @@ would be rendered to
 
 Testing
 -------
-This time I was allowed to use a testing framework as long as it was part of the Ruby Standard Library. I chosed MiniTest to take advantage of its BDD syntax a la Rspec.
+This time I was allowed to use a testing framework as long as it was part of the Ruby Standard Library. I chosed MiniTest to take advantage of its BDD syntax a la RSpec.
 
-To be able to integration test the wiki I also used MiniTest. I extended the `MiniTest::Unit::TestCase` class with the `get` and `post` methods to be able to navigate the app.
-
-In order to DRY-up the starting and stoping of WEBRick in tests I created a `feature` helper. This helper creates a MiniTest especification with the starting and stopping of the server as its `before`and `after` blocks.
+To be able to integration test the wiki I also used MiniTest. I extended the `MiniTest::Unit::TestCase` class with the `get` and `post` methods to be able to navigate the app. In order to DRY-up the starting and stoping of WEBRick in tests I created a `feature` helper. This helper creates a MiniTest especification with the starting and stopping of the server as its `before` and `after` blocks.
