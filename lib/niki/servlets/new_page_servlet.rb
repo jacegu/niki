@@ -9,7 +9,7 @@ module Niki
         wiki =  @options[0]
         @title, @content  = request.query['title'], request.query['content']
         if Page.would_be_valid_with_title?(@title) and
-           not wiki.has_a_page_with_title?(@title)
+           not wiki.has_a_page_entitled?(@title)
           create_the_page(wiki, response)
         else
           prompt_error(response)

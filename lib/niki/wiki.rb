@@ -16,7 +16,7 @@ module Niki
       pages.any?
     end
 
-    def has_a_page_with_title?(title)
+    def has_a_page_entitled?(title)
       page_with_title(title).found?
     end
 

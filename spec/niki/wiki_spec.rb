@@ -74,15 +74,15 @@ module Niki
       end
     end
 
-    describe '#has_a_page_with_title title' do
+    describe '#has_a_page_entitled? title' do
       it 'returns true if has a page with that title' do
         the_title = 'the title'
         @wiki.add_page Page.new(the_title)
-        @wiki.has_a_page_with_title?(the_title).must_equal true
+        @wiki.has_a_page_entitled?(the_title).must_equal true
       end
 
       it 'returns false if it does not have a page with that title' do
-        @wiki.has_a_page_with_title?('something').must_equal false
+        @wiki.has_a_page_entitled?('something').must_equal false
       end
     end
   end
