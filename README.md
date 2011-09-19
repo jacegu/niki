@@ -62,5 +62,3 @@ Testing
 This time I was allowed to use a testing framework as long as it was part of the Ruby Standard Library. I choosed MiniTest to take advantage of its BDD syntax a la RSpec.
 
 To be able to integration test the wiki I also used MiniTest. I extended the `MiniTest::Unit::TestCase` class with the `get` and `post` methods to be able to navigate the app. In order to DRY-up the starting and stoping of WEBRick in tests I created a `feature` helper. This helper creates a MiniTest especification with the starting and stopping of the server as its `before` and `after` blocks.
-
-

@@ -1,6 +1,5 @@
 require 'webrick'
 require 'niki/wiki'
-require 'niki/page_request'
 require 'niki/servlets/all'
 
 module Niki
