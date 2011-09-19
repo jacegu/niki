@@ -62,7 +62,7 @@ feature "Editing an existing wiki page" do
     end
 
     describe 'with invalid data' do
-      describe 'update de title to an empty string' do
+      describe 'update the title to an empty string' do
         before do
           @updated_title = '   '
           @response = post '/pages/some-title', {:title => @updated_title}
@@ -73,7 +73,6 @@ feature "Editing an existing wiki page" do
           @response.body.must_match /must have a title/
         end
       end
-
 
       describe 'updating title to the title of an existing page' do
         before do

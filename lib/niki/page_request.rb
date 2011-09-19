@@ -9,10 +9,6 @@ module Niki
       @path = path
     end
 
-    def all_pages?
-      ALL_PAGES_PATH == path
-    end
-
     def page_url
       if all_pages?
         return ''
@@ -31,6 +27,10 @@ module Niki
         action = action[1..-1] || DEFAULT_ACTION
         return action.to_sym
       end
+    end
+
+    def all_pages?
+      ALL_PAGES_PATH == path
     end
   end
 end

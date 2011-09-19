@@ -19,9 +19,9 @@ feature 'Rendering the content of a wiki page' do
     end
 
     it 'does not wrap empty lines' do
-      @wiki.add_page Niki::Page.with('page1', "some\n\ncontent")
+      @wiki.add_page Niki::Page.with('page1', "some\n\n\ncontent")
       response = get '/pages/page1'
-      response.body.must_match /<p>some<\/p>\n\n<p>content<\/p>/m
+      response.body.must_match /<p>some<\/p>\n<p>content<\/p>/m
     end
   end
 

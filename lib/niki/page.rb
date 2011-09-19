@@ -15,7 +15,7 @@ module Niki
 
     def url
       chunks = title.downcase.split(/\s/)
-      alphanumeric_chunks = chunks.map{ |c| c.gsub(/\W|_/, '') }
+      alphanumeric_chunks = chunks.map{ |chunk| chunk.gsub(/\W|_/, '') }
       alphanumeric_chunks.join('-')
     end
 
