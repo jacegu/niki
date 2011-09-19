@@ -26,7 +26,7 @@ Regarding the page content the set of features you have available is:
 
 - **HMTL safe content:** if you write HTML in the wiki it won't be interpreted by the browser.
 - **Paragraphs:** if you split your page content in paragraphs Niki will respect that structure.
-- **Linking other niki pages**: You can create a link to other pages in the wiki by using the syntax `[the title of the page]`. Keep in mind that niki is case sansitive so a page entitled `page title` is different from `Page title`. Niki will also check if a page with given title exists. If no page with that title is found niki won't try to create a link.
+- **Linking other niki pages**: You can create a link to other pages in the wiki by using the syntax `[the title of the page]`. Keep in mind that niki is case sansitive so a page entitled `page title` is different from another with the title `Page title`. Niki will also check if a page with given title exists. If no page with that title is found niki won't create a link.
 
 A page example
 -------------
