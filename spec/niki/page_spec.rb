@@ -54,6 +54,11 @@ module Niki
         page.url.must_equal 'something'
       end
 
+      it 'handles ñ character' do
+        page = Page.new('ñoÑo')
+        page.url.must_equal 'ñoño'
+      end
+
       it 'downcases every letter in the title' do
         page = Page.new('SoMeTHinG With UPPERCASE')
         page.url.must_equal 'something-with-uppercase'
