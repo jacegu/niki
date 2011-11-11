@@ -5,8 +5,7 @@ module Niki
     attr_reader :page, :wiki
 
     def initialize(page_to_render, wiki)
-      @page = page_to_render
-      @wiki = wiki
+      @page, @wiki = page_to_render, wiki
     end
 
     def title
