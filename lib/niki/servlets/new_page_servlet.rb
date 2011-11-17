@@ -6,21 +6,34 @@ module Niki
       end
 
       def do_POST(request, response)
-        wiki =  @options[0]
-        @title, @content  = request.query['title'], request.query['content']
-        if Page.would_be_valid_with_title?(@title) and
-           not wiki.has_a_page_entitled?(@title)
-          create_the_page(wiki, response)
-        else
-          prompt_error(response)
-        end
+        process_new_page(request)
+        generate_new_page(response)
       end
 
       private
 
-      def create_the_page(wiki, response)
+      def process_new_page(request)
+        @wiki =  @options[0]
+        @title, @content  = request.query['title'], request.query['content']
+      end
+
+      def generate_new_page(response)
+        return create_the_page(response) if page_can_be_added?
+        prompt_error(response)
+      end
+
+      def page_can_be_added?
+        Page.would_be_valid_with_title?(@title) and
+        not @wiki.has_a_page_entitled?(@title)
+      end
+
+      def create_the_page(response)
         page = Page.with(@title, @content)
-        wiki.add_page(page)
+        add_and_redirect_to(page, response)
+      end
+
+      def add_and_redirect_to(page, response)
+        @wiki.add_page(page)
         redirect_to_page(page, response)
       end
 
