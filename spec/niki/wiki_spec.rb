@@ -36,8 +36,7 @@ module Niki
       describe 'if a page with that url exists 'do
         it 'returns that page' do
           the_page_url = 'some-url'
-          the_page = stub
-          the_page.expect(:url, the_page_url)
+          the_page = Page.new('Some url')
           @wiki.add_page(the_page)
           @wiki.page_with_url(the_page_url).must_be_same_as the_page
         end
@@ -55,8 +54,7 @@ module Niki
       describe 'if a page with that title exists 'do
         it 'returns that page' do
           the_page_title = 'the title'
-          the_page = stub
-          the_page.expect(:title, the_page_title)
+          the_page = Page.new(the_page_title)
           @wiki.add_page(the_page)
           @wiki.page_with_title(the_page_title).must_be_same_as the_page
         end
