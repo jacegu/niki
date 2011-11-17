@@ -4,12 +4,12 @@ module Niki
   class Wiki
     attr_reader :pages
 
-    def initialize
-      @pages = []
+    def initialize(pages = [])
+      @pages = pages
     end
 
     def add_page(page)
-      pages << page
+      Wiki.new self.pages.push(page)
     end
 
     def has_pages?
@@ -21,11 +21,15 @@ module Niki
     end
 
     def page_with_url(url)
-      pages.select{ |p| p.url == url }.first || NullPage.new
+      find_page_by{ |p| p.url == url }
     end
 
     def page_with_title(title)
-      pages.select{ |p| p.title == title }.first || NullPage.new
+      find_page_by{ |p| p.title == title }
+    end
+
+    def find_page_by(&criteria)
+      pages.select(&criteria).first || NullPage.new
     end
   end
 end
