@@ -30,11 +30,15 @@ module Niki
 
     private
     def transform_title_into_url_path
-      split_title.map{ |chunk| chunk.gsub(/[^a-zñ0-9]/, '') }.join('-')
+      split_title.map(&remove_symbols).join('-')
     end
 
     def split_title
-      @title.downcase.gsub(/Ñ/, 'ñ').split(/\s/)
+      @title.downcase.split(/\s/)
+    end
+
+    def remove_symbols
+      Proc.new { |string| string.gsub(/ñ/i, 'n').gsub(/[\W|_]/, '') }
     end
   end
 
