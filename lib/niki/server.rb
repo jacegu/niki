@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 require 'webrick'
 require 'niki/wiki'
 require 'niki/servlets/all'
@@ -11,11 +13,7 @@ module Niki
 
     def initialize(wiki, port = 8583)
       @server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => PUBLIC_DIR)
-
-      @server.mount '/new-page', NewPageServlet,      wiki
-      @server.mount '/pages',    ExistingPageServlet, wiki
-
-      trap('INT'){ stop }
+      setup_infraestructure_for(wiki)
     end
 
     def start
@@ -24,6 +22,18 @@ module Niki
 
     def stop
       @server.shutdown
+    end
+
+    private
+
+    def setup_infraestructure_for(wiki)
+      mount_servlets_to_handle(wiki)
+      trap('INT'){ stop }
+    end
+
+    def mount_servlets_to_handle(wiki)
+      @server.mount '/new-page', NewPageServlet,      wiki
+      @server.mount '/pages',    ExistingPageServlet, wiki
     end
   end
 end
