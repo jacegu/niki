@@ -18,16 +18,16 @@ module Niki
 
       private
 
-        def create_the_page(wiki, response)
-          page = Page.with(@title, @content)
-          wiki.add_page(page)
-          redirect_to_page(page, response)
-        end
+      def create_the_page(wiki, response)
+        page = Page.with(@title, @content)
+        wiki.add_page(page)
+        redirect_to_page(page, response)
+      end
 
-        def prompt_error(response)
-          @error_message = "every page must have a title and it must be different from other pages'"
-          response.body = render :new_page
-        end
+      def prompt_error(response)
+        @error_message = "every page must have a title and it must be different from other pages'"
+        response.body = render :new_page
+      end
     end
   end
 end
