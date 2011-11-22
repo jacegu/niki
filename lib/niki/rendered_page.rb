@@ -17,7 +17,7 @@ module Niki
     end
 
     def content
-      Content.new(@page.content, wiki).to_html
+      Content.new(@page.content, wiki).render
     end
   end
 end

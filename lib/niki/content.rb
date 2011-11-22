@@ -7,7 +7,7 @@ module Niki
       @content, @wiki = content, wiki
     end
 
-    def to_html
+    def render
       non_empty_lines.map{ |line| Paragraph.new(line, @wiki).render }.join("\n")
     end
 
