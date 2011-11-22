@@ -2,31 +2,43 @@ require 'erb'
 
 module Niki
   class Content
-    include ERB::Util
 
     def initialize(content, wiki)
       @content, @wiki = content, wiki
     end
 
     def to_html
-      non_empty_lines = @content.split(/\n|\r/m).reject{ |line| line.strip.empty? }
-      non_empty_lines.map do |line|
-        render_paragraph_in(render_links_in(html_escape(line)))
-      end.join("\n")
+      non_empty_lines.map{ |line| Paragraph.new(line, @wiki).render }.join("\n")
     end
 
-    private
+    def non_empty_lines
+      @content.split(/\n|\r/m).reject{ |line| line.strip.empty? }
+    end
+  end
 
-    def render_paragraph_in(line)
-      "<p>#{line}</p>"
+  class Paragraph
+    include ERB::Util
+
+    def initialize(text, wiki)
+      @text, @wiki = text, wiki
     end
 
-    def render_links_in(line)
-      if link = line.match(Link::AS_REGEXP)
-        "#{link.pre_match}#{Link.new(link, @wiki)}#{render_links_in(link.post_match)}"
-      else
-        line
-      end
+    def render
+      "<p>#{render_links_in(html_escape(@text))}</p>"
+    end
+
+    def render_links_in(paragraph)
+      return replace_link_in(paragraph) if link_in(paragraph)
+      paragraph
+    end
+
+    def link_in(paragraph)
+      paragraph.match(Link::AS_REGEXP)
+    end
+
+    def replace_link_in(line)
+      link = link_in(line)
+      "#{link.pre_match}#{Link.new(link, @wiki)}#{render_links_in(link.post_match)}"
     end
   end
 
@@ -37,17 +49,23 @@ module Niki
       @link, @wiki = link.to_s, wiki
     end
 
+    def to_s
+      return html_link_to_linked_page if linked_page.found?
+      @link
+    end
+
+    private
+
+    def linked_page
+      @wiki.page_with_title(title_of_linked_page)
+    end
+
     def title_of_linked_page
       @link.to_s[1..-2]
     end
 
-    def to_s
-      page = @wiki.page_with_title(title_of_linked_page)
-      if page.found?
-        "<a href=\"/pages/#{page.url}\">#{page.title}</a>"
-      else
-        @link
-      end
+    def html_link_to_linked_page
+      "<a href=\"/pages/#{linked_page.url}\">#{linked_page.title}</a>"
     end
   end
 
