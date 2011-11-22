@@ -24,6 +24,7 @@ module Niki
     end
 
     private
+
     def action_to_sym
       action = url_action[1..-1] || DEFAULT_ACTION
       return action.to_sym
