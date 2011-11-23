@@ -6,9 +6,12 @@ module Niki
       VIEWS_DIR  = 'views'
 
       def render(view)
-        html = ""
-        File.open("#{VIEWS_DIR}/#{view}.html.erb", 'r'){ |f| html = f.read }
-        ERB.new(html).result(binding)
+        view_file = "#{VIEWS_DIR}/#{view}.html.erb"
+        ERB.new(content_of(view_file)).result(binding)
+      end
+
+      def content_of(file)
+        File.open(file, 'r'){ |f| f.read }
       end
     end
   end
