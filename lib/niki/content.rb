@@ -2,16 +2,25 @@ require 'erb'
 
 module Niki
   class Content
+    def self.html_for(content, wiki)
+      new(content, wiki).html
+    end
 
     def initialize(content, wiki)
       @content, @wiki = content, wiki
     end
 
-    def render
-      non_empty_lines.map{ |line| Paragraph.new(line, @wiki).render }.join("\n")
+    def html
+      paragraphs.map{ |p| Paragraph.html_for p, @wiki }.join("\n")
     end
 
-    def non_empty_lines
+    def paragraphs
+      lines_with_content
+    end
+
+    private
+
+    def lines_with_content
       @content.split(/\n|\r/m).reject{ |line| line.strip.empty? }
     end
   end
@@ -19,26 +28,32 @@ module Niki
   class Paragraph
     include ERB::Util
 
+    def self.html_for(text, wiki)
+      new(text, wiki).html
+    end
+
     def initialize(text, wiki)
       @text, @wiki = text, wiki
     end
 
-    def render
-      "<p>#{render_links_in(html_escape(@text))}</p>"
+    def html
+      "<p>#{replace_link_placeholder_in(html_escape(@text))}</p>"
     end
 
-    def render_links_in(paragraph)
-      return replace_link_in(paragraph) if link_in(paragraph)
-      paragraph
+    private
+
+    def replace_link_placeholder_in(text)
+      return replace_link_in(text) if link_in(text)
+      text
     end
 
-    def link_in(paragraph)
-      paragraph.match(Link::AS_REGEXP)
+    def link_in(text)
+      text.match(Link::AS_REGEXP)
     end
 
     def replace_link_in(line)
       link = link_in(line)
-      "#{link.pre_match}#{Link.new(link, @wiki)}#{render_links_in(link.post_match)}"
+      "#{link.pre_match}#{Link.new(link, @wiki)}#{replace_link_placeholder_in(link.post_match)}"
     end
   end
 
