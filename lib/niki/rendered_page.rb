@@ -17,7 +17,10 @@ module Niki
     end
 
     def content
-      Content.new(@page.content, wiki).render
+      # I was told to do
+      # Content.render @page.content, wiki
+      # but I kind of like it better this way
+      Content.html_for @page.content, wiki
     end
   end
 end
