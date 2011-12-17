@@ -7,7 +7,7 @@ feature "Editing an existing wiki page" do
     before do
       @page_title = 'Testing page'
       @page_content = "Content\nfor\nthis\npage"
-      @wiki.add_page Niki::Page.with(@page_title, @page_content)
+      @wiki.publish Niki::Page.with(@page_title, @page_content)
 
       response =  get '/pages/testing-page/edit'
       @page_html = response.body
@@ -36,7 +36,7 @@ feature "Editing an existing wiki page" do
 
   describe 'updating an existing page' do
     before do
-      @wiki.add_page Niki::Page.with('some title', 'some content')
+      @wiki.publish Niki::Page.with('some title', 'some content')
     end
 
     describe 'with valid data' do
@@ -78,7 +78,7 @@ feature "Editing an existing wiki page" do
         before do
           @updated_title = 'The Title'
           @updated_content = 'some content'
-          @wiki.add_page Niki::Page.new(@updated_title)
+          @wiki.publish Niki::Page.new(@updated_title)
           @response = post '/pages/some-title', {:title => @updated_title, :content => @updated_content}
         end
 

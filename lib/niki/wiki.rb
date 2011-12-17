@@ -9,7 +9,7 @@ module Niki
       @pages = pages
     end
 
-    def add_page(page)
+    def publish(page)
       pages << page
     end
 

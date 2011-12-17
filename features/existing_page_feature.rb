@@ -7,7 +7,7 @@ feature "Showing an existing wiki page" do
     before do
       page_content = "Content\nfor\nthis\npage"
       @page = Niki::Page.with('Testing page', page_content)
-      @wiki.add_page(@page)
+      @wiki.publish(@page)
       @page_html = (get '/pages/testing-page').body
     end
 

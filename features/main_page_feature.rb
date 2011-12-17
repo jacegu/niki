@@ -18,7 +18,7 @@ feature "Wiki's Main Page" do
   describe 'if pages have been created' do
     before do
       @the_page_title = 'page title'
-      @wiki.add_page Niki::Page.new(@the_page_title)
+      @wiki.publish Niki::Page.new(@the_page_title)
       response = get '/pages'
       @response_body = response.body
     end

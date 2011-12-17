@@ -33,7 +33,7 @@ module Niki
       end
 
       def add_and_redirect_to(page, response)
-        @wiki.add_page(page)
+        @wiki.publish(page)
         redirect_to_page(page, response)
       end
 

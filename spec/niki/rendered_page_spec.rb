@@ -7,7 +7,7 @@ module Niki
       @the_title = 'page title'
       @the_page_to_render = Page.new(@the_title)
       @the_wiki = Wiki.new
-      @the_wiki.add_page(@the_page_to_render)
+      @the_wiki.publish(@the_page_to_render)
       @rendered_page = RenderedPage.new(@the_page_to_render, @the_wiki)
     end
 
@@ -51,8 +51,8 @@ module Niki
       end
 
       it 'replaces every link in the content' do
-        @the_wiki.add_page Page.new('second')
-        @the_wiki.add_page Page.new('third')
+        @the_wiki.publish Page.new('second')
+        @the_wiki.publish Page.new('third')
         @the_page_to_render.content = 'first: [page title] second: [second] third: [third]'
         rendered_content = @rendered_page.content
         rendered_content.must_match /<a href="\/pages\/page-title">page title<\/a>/
