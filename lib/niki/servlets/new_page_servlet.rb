@@ -23,7 +23,7 @@ module Niki
       end
 
       def page_can_be_added?
-        Page.would_be_valid_with_title?(@title) and
+        Page.is_valid_with?(@title) and
         not @wiki.has_a_page_entitled?(@title)
       end
 

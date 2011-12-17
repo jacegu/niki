@@ -24,11 +24,12 @@ module Niki
       title
     end
 
-    def self.would_be_valid_with_title?(title)
+    def self.is_valid_with?(title)
       not title.nil? and not title.strip.empty?
     end
 
     private
+
     def transform_title_into_url_path
       split_title.map(&remove_symbols).join('-')
     end
