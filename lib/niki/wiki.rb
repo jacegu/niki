@@ -1,3 +1,4 @@
+# encoding:utf-8
 require 'niki/page'
 
 module Niki
@@ -9,15 +10,19 @@ module Niki
     end
 
     def add_page(page)
-      Wiki.new self.pages.push(page)
+      pages << page
     end
 
-    def has_pages?
+    def has_any_pages?
       pages.any?
     end
 
     def has_a_page_entitled?(title)
       page_with_title(title).found?
+    end
+
+    def has_a_page_with_url?(url)
+      page_with_url(url).found?
     end
 
     def page_with_url(url)
