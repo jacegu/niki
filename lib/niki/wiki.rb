@@ -22,12 +22,18 @@ module Niki
     end
 
     def page_with(data)
-      pages.select(&Criteria.with(data)).first || NullPage.new
+      find_page_with(data) || NullPage.new
+    end
+
+    private
+
+    def find_page_with(data)
+      pages.select(&Criteria.for(data)).first
     end
   end
 
   class Criteria
-    def self.with(page_info)
+    def self.for(page_info)
       new(page_info).build_proc
     end
 
