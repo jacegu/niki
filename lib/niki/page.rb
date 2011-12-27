@@ -8,7 +8,7 @@ module Niki
       Page.new(title, content)
     end
 
-    def initialize(title, content= '')
+    def initialize(title, content = '')
       @title, @content = title, content
     end
 

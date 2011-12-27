@@ -2,7 +2,7 @@ require 'erb'
 
 module Niki
   class Content
-    def self.html_for(content, wiki)
+    def self.to_html(content, wiki)
       new(content, wiki).html
     end
 
@@ -11,7 +11,7 @@ module Niki
     end
 
     def html
-      paragraphs.map{ |p| Paragraph.html_for p, @wiki }.join("\n")
+      transform_content_to_html
     end
 
     def paragraphs
@@ -19,6 +19,10 @@ module Niki
     end
 
     private
+
+    def transform_content_to_html
+      paragraphs.map{ |p| Paragraph.to_html(p, @wiki) }.join("\n")
+    end
 
     def lines_with_content
       @content.split(/\n|\r/m).reject{ |line| line.strip.empty? }
@@ -28,7 +32,7 @@ module Niki
   class Paragraph
     include ERB::Util
 
-    def self.html_for(text, wiki)
+    def self.to_html(text, wiki)
       new(text, wiki).html
     end
 
