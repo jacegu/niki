@@ -5,76 +5,87 @@ require 'niki/rendered_page'
 module Niki
   module Servlets
     class ExistingPageServlet < HTTPServlet::AbstractServlet
+      KNOWN_ACTIONS = [:edit, :show]
 
       def do_GET(request, response)
-        @wiki, @response = @options[0], response
-        requested = PageRequest.new(request.path)
-        if requested.all_pages?
-          render_all_pages
-        else
-          render_page_with_url(requested.page_url, requested.action)
-        end
+        requested = process_existing_page(request)
+        supply_page(requested, response)
       end
 
       def do_POST(request, response)
-        @wiki, @request, @response = @options[0], request, response
-        requested = PageRequest.new(request.path)
-        update_page_with_url(requested.page_url)
+        requested = process_existing_page(request)
+        update_page(requested, request, response)
       end
 
       private
 
-      def render_all_pages
-        @response.body = render :index
+      def supply_page(requested, response)
+        return render_all_pages(response) if requested.all_pages?
+        render_page(requested, response)
       end
 
-      def render_page_with_url(url, action)
-        @page = @wiki.page_with_url(url)
-        if @page.found?
-          render_action_for(@page, action)
+      def process_existing_page(request)
+        @wiki = @options[0]
+        return PageRequest.new(request.path)
+      end
+
+      def render_all_pages(response)
+        response.body = render :index
+      end
+
+      def render_page(requested, response)
+        render_action_for(page_with(requested.page_url), requested.action, response)
+      end
+
+      def page_with(url)
+        return @wiki.page_with(url: url) if @wiki.has_a_page_with_url?(url)
+        render_not_found
+      end
+
+      def render_action_for(page, action, response)
+        return send action, page, response if KNOWN_ACTIONS.include? action
+        render_not_found
+      end
+
+      def edit(page, response)
+        @page, @title, @content = page, page.title, page.content
+        response.body = render :edit_page
+      end
+
+      def show(page, response)
+        @page = RenderedPage.new(page, @wiki)
+        response.body = render :page
+      end
+
+      #will this be needed with immutable wiki?
+      def update_page(requested, request, response)
+        @page = page_with(requested.page_url)
+        @title, @content  = request.query['title'], request.query['content']
+        if page_can_be_updated?
+          render_updated_page(response)
         else
-          render_not_found
+          prompt_error(response)
         end
       end
 
-      def render_action_for(page, action)
-        case action
-        when :edit then
-          @title, @content = @page.title, @page.content
-          @response.body = render :edit_page
-        when :show then
-          @page = RenderedPage.new(@page, @wiki)
-          @response.body = render :page
-        else render_not_found
-        end
+      def page_can_be_updated?
+        Page.is_valid_with?(@title) and
+        there_is_no_other_page_entitled?(@title, @page)
       end
-
-      def update_page_with_url(url)
-        @page = @wiki.page_with_url(url)
-        @title, @content  = @request.query['title'], @request.query['content']
-        if Page.would_be_valid_with_title?(@title) and
-           there_is_no_other_page_entitled?(@title, @page)
-          update_page
-        else
-          prompt_error
-        end
-      end
-
-      private
 
       def there_is_no_other_page_entitled?(title, page)
-        (not @wiki.has_a_page_entitled?(title)) or @wiki.page_with_title(title) == page
+        (not @wiki.has_a_page_entitled?(title)) or
+        @wiki.page_with_title(title) == page
       end
 
-      def update_page
-        @page.title = @title
-        @page.content = @content
-        redirect_to_page(@page, @response)
+      def render_updated_page(response)
+        @page.title, @page.content = @title, @content
+        redirect_to_page(@page, response)
       end
 
-      def prompt_error
+      def prompt_error(response)
         @error_message = "every page must have a title and it must be different from other pages'"
-        @response.body = render :edit_page
+        response.body = render :edit_page
       end
     end
 

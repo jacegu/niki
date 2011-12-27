@@ -18,23 +18,19 @@ module Niki
     end
 
     def has_a_page_entitled?(title)
-      find_page_with(title: title).found?
+      page_with(title: title).found?
     end
 
     def has_a_page_with_url?(url)
-      find_page_with(url: url).found?
-    end
-
-    def page_with_url(url)
-      find_page_with(url: url)
+      page_with(url: url).found?
     end
 
     def page_with_title(title)
-      find_page_with(title: title)
+      page_with(title: title)
     end
 
-    def find_page_with(page_info)
-      pages.select(&Criteria.for(page_info)).first || NullPage.new
+    def page_with(data)
+      pages.select(&Criteria.with(data)).first || NullPage.new
     end
 
   end
@@ -42,7 +38,7 @@ module Niki
   class Criteria
     attr_reader :field, :value
 
-    def self.for(page_info)
+    def self.with(page_info)
       new(page_info).build_proc
     end
 

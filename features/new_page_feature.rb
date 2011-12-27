@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 require 'feature_helper'
 require 'http_helper'
 
@@ -48,6 +50,27 @@ feature 'Adding a Page to the wiki' do
         @response.body.must_match '/the-page-title'
       end
     end
+
+=begin
+    describe 'handles a page with ñ or Ñ in the title' do
+      before do
+        @page_title = 'title with a ñ and a Ñ'
+        @page_content = 'some content'
+        @response = post '/new-page', {:title => @page_title, :content => @page_content}
+      end
+
+      it 'adds the page' do
+        last_page = @wiki.pages.last
+        last_page.title.must_equal @page_title
+        last_page.content.must_equal @page_content
+      end
+
+      it 'renders the edit page form for the added page' do
+        @response.code.must_equal '302'
+        @response.body.must_match '/title-with-a-n-and-a-n'
+      end
+    end
+=end
 
     describe 'if the title is not provided (empty)' do
       before do

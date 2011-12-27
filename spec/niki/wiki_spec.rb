@@ -32,19 +32,19 @@ module Niki
       end
     end
 
-    describe '#page_with_url url' do
+    describe '#page_with url: url' do
       describe 'if a page with that url exists 'do
         it 'returns that page' do
           the_page_url = 'some-url'
           the_page = Page.new('Some url')
           @wiki.publish(the_page)
-          @wiki.page_with_url(the_page_url).must_be_same_as the_page
+          @wiki.page_with(url: the_page_url).must_be_same_as the_page
         end
       end
 
       describe 'if no page with that url exists' do
         it 'returns a null page' do
-          the_page = @wiki.page_with_url('does-not-exist')
+          the_page = @wiki.page_with(url: 'does-not-exist')
           the_page.class.must_equal NullPage
         end
       end

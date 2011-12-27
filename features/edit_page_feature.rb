@@ -44,7 +44,7 @@ feature "Editing an existing wiki page" do
         @updated_title = "Updated page's title"
         @updated_content = "Updated page's content"
         @response = post '/pages/some-title', {:title => @updated_title, :content => @updated_content}
-        @updated_page = @wiki.page_with_url('updated-pages-title')
+        @updated_page = @wiki.page_with(url: 'updated-pages-title')
       end
 
       it "updates the page's title" do
@@ -66,7 +66,7 @@ feature "Editing an existing wiki page" do
         before do
           @updated_title = '   '
           @response = post '/pages/some-title', {:title => @updated_title}
-          @updated_page = @wiki.page_with_url('updated-pages-title')
+          @updated_page = @wiki.page_with(url: 'updated-pages-title')
         end
 
         it 'prompts an invalid title error' do
