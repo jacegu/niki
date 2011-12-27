@@ -74,7 +74,7 @@ module Niki
       end
 
       def there_is_no_other_page_entitled?(title, page)
-        (not @wiki.has_a_page_entitled?(title)) or
+        (not @wiki.has_a_page_with?(title: title)) or
         @wiki.page_with(title: title) == page
       end
 

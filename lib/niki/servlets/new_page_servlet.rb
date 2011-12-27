@@ -24,7 +24,7 @@ module Niki
 
       def page_can_be_added?
         Page.is_valid_with?(@title) and
-        not @wiki.has_a_page_entitled?(@title)
+        not @wiki.has_a_page_with?(title: @title)
       end
 
       def create_the_page(response)

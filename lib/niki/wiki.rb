@@ -17,10 +17,6 @@ module Niki
       pages.any?
     end
 
-    def has_a_page_entitled?(title)
-      page_with(title: title).found?
-    end
-
     def has_a_page_with?(data)
       page_with(data).found?
     end
@@ -31,15 +27,13 @@ module Niki
   end
 
   class Criteria
-    attr_reader :field, :value
-
     def self.with(page_info)
       new(page_info).build_proc
     end
 
     def initialize(page_info)
       @field = page_info.keys.first
-      @value = page_info[field].gsub("'", "\\'")
+      @value = page_info[@field].gsub("'", "\\'")
     end
 
     def build_proc
