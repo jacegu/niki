@@ -84,14 +84,14 @@ module Niki
       end
     end
 
-    describe '#has_a_page_with_url? url' do
+    describe '#has_a_page_with? url: url' do
       it 'returns true if has a page with that url' do
         @wiki.publish Page.new('the url')
-        @wiki.has_a_page_with_url?('the-url').must_equal true
+        @wiki.has_a_page_with?(url: 'the-url').must_equal true
       end
 
       it 'returns false if it does not have a page with that url' do
-        @wiki.has_a_page_with_url?('something').must_equal false
+        @wiki.has_a_page_with?(url: 'something').must_equal false
       end
     end
 

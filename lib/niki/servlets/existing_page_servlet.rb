@@ -38,7 +38,7 @@ module Niki
       end
 
       def page_with(url)
-        return @wiki.page_with(url: url) if @wiki.has_a_page_with_url?(url)
+        return @wiki.page_with(url: url) if @wiki.has_a_page_with?(url: url)
         render_not_found
       end
 

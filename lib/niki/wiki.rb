@@ -21,8 +21,8 @@ module Niki
       page_with(title: title).found?
     end
 
-    def has_a_page_with_url?(url)
-      page_with(url: url).found?
+    def has_a_page_with?(data)
+      page_with(data).found?
     end
 
     def page_with(data)
