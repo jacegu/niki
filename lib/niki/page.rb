@@ -20,12 +20,12 @@ module Niki
       true
     end
 
-    def to_s
-      title
-    end
-
     def self.is_valid_with?(title)
       not title.nil? and not title.strip.empty?
+    end
+
+    def to_html(wiki)
+      PageHtml.new(self, wiki)
     end
 
     private

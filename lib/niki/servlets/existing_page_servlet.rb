@@ -1,6 +1,6 @@
 require 'webrick'
 require 'niki/page_request'
-require 'niki/rendered_page'
+require 'niki/page_html'
 
 module Niki
   module Servlets
@@ -53,7 +53,7 @@ module Niki
       end
 
       def show(page, response)
-        @page = RenderedPage.new(page, @wiki)
+        @page = page.to_html @wiki
         response.body = render :page
       end
 

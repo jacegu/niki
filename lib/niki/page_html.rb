@@ -1,7 +1,8 @@
 require 'niki/content'
+require 'niki/page'
 
 module Niki
-  class RenderedPage < Page
+  class PageHtml < Page
     attr_reader :page, :wiki
 
     def initialize(page_to_render, wiki)
@@ -17,10 +18,7 @@ module Niki
     end
 
     def content
-      # I was told to do
-      # Content.render @page.content, wiki
-      # but I kind of like it better this way
-      Content.html_for @page.content, wiki
+      Content.to_html @page.content, wiki
     end
   end
 end

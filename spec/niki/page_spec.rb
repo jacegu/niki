@@ -72,13 +72,6 @@ module Niki
       end
     end
 
-    describe '#to_s' do
-      it 'returs the title of the page' do
-        page_title = 'some title'
-        Page.new(page_title).to_s.must_equal page_title
-      end
-    end
-
     describe '::with title, content' do
       before do
         @the_title = 'title'
@@ -95,7 +88,7 @@ module Niki
       end
     end
 
-    describe '::s_valid_with? title' do
+    describe '::is_valid_with? title' do
       describe 'if the title contains at least an alphanumeric character' do
         it 'returns true' do
           Page.is_valid_with?('some title').must_equal true
@@ -106,6 +99,15 @@ module Niki
         it 'returns false' do
           Page.is_valid_with?('    ').must_equal false
         end
+      end
+    end
+
+    describe 'to_html wiki' do
+      it 'creates the PageHtml of the current page' do
+        page, wiki = Page.new('title'), stub
+        page_html = page.to_html(wiki)
+        page_html.class.must_equal PageHtml
+        page_html.page.must_equal page
       end
     end
   end
