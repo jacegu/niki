@@ -30,20 +30,21 @@ module Niki
     def find_page_with(data)
       pages.select(&Criteria.for(data)).first
     end
-  end
 
-  class Criteria
-    def self.for(page_info)
-      new(page_info).build_proc
+    class Criteria
+      def self.for(page_info)
+        new(page_info).build_proc
+      end
+
+      def initialize(page_info)
+        @field = page_info.keys.first
+        @value = page_info[@field].gsub("'", "\\'")
+      end
+
+      def build_proc
+        Proc.new { |p| eval "p.#{@field} == '#{@value}'" }
+      end
     end
 
-    def initialize(page_info)
-      @field = page_info.keys.first
-      @value = page_info[@field].gsub("'", "\\'")
-    end
-
-    def build_proc
-      Proc.new { |p| eval "p.#{@field} == '#{@value}'" }
-    end
   end
 end
