@@ -75,7 +75,7 @@ module Niki
 
       def there_is_no_other_page_entitled?(title, page)
         (not @wiki.has_a_page_entitled?(title)) or
-        @wiki.page_with_title(title) == page
+        @wiki.page_with(title: title) == page
       end
 
       def render_updated_page(response)

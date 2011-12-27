@@ -50,13 +50,13 @@ module Niki
       end
     end
 
-    describe '#page_with_title title' do
+    describe '#page_with title: title' do
       describe 'if a page with that title exists 'do
         it 'returns that page' do
           the_page_title = 'the title'
           the_page = Page.new(the_page_title)
           @wiki.publish(the_page)
-          @wiki.page_with_title(the_page_title).must_be_same_as the_page
+          @wiki.page_with(title: the_page_title).must_be_same_as the_page
         end
 
         it 'returns that page even if it has diferent cased words' do
@@ -66,7 +66,7 @@ module Niki
 
       describe 'if no page with that title exists' do
         it 'returns a null page' do
-          the_page = @wiki.page_with_title('does not exist')
+          the_page = @wiki.page_with(title: 'does not exist')
           the_page.class.must_equal NullPage
         end
       end

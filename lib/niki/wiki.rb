@@ -25,14 +25,9 @@ module Niki
       page_with(url: url).found?
     end
 
-    def page_with_title(title)
-      page_with(title: title)
-    end
-
     def page_with(data)
       pages.select(&Criteria.with(data)).first || NullPage.new
     end
-
   end
 
   class Criteria

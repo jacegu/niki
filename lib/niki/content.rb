@@ -72,7 +72,7 @@ module Niki
     private
 
     def linked_page
-      @wiki.page_with_title(title_of_linked_page)
+      @wiki.page_with(title: title_of_linked_page)
     end
 
     def title_of_linked_page
