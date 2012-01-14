@@ -9,7 +9,6 @@ This branch contains a second version of the wiki. This version was the result o
 - Refactor to **methods that are 2 lines long** at most.
 - **Improve naming and readability**.
 
-
 **Known issues**: There is an issue when the page title includes non ascii-8bit characters. We haven't managed to solve it yet but we will.
 
 - - -
