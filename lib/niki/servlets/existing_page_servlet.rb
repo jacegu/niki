@@ -88,7 +88,7 @@ module Niki
 
       def swap(page, new_page)
         @server.wiki.pages.delete page
-        @server.handle Wiki.with(@server.wiki.pages << updated_page)
+        @server.handle_a_wiki_with(@server.wiki.pages << updated_page)
       end
 
       def prompt_error(response)

@@ -33,13 +33,8 @@ module Niki
       end
 
       def add_and_redirect_to(page, response)
-        add page
+        @server.handle_a_wiki_with(@wiki.pages << page)
         redirect_to(page, response)
-      end
-
-      def add(page)
-        pages = @wiki.pages << page
-        @server.handle Wiki.with pages
       end
 
       def prompt_error(response)

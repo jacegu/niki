@@ -45,6 +45,10 @@ module Niki
       mount_servlets_to_handle(wiki)
     end
 
+    def handle_a_wiki_with(pages)
+      handle Wiki.with pages
+    end
+
     private
 
     def mount_servlets_to_handle(wiki)
