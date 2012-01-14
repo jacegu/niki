@@ -34,7 +34,7 @@ module Niki
 
       def add_and_redirect_to(page, response)
         add page
-        redirect_to_page(page, response)
+        redirect_to(page, response)
       end
 
       def add(page)

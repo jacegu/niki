@@ -58,6 +58,7 @@ module Niki
       end
 
       #will this be needed with immutable wiki?
+      #it won't and thats why its longer than two lines of code
       def update_page(requested, request, response)
         @page = page_with(requested.page_url)
         @title, @content  = request.query['title'], request.query['content']
@@ -70,17 +71,17 @@ module Niki
 
       def page_can_be_updated?
         Page.is_valid_with?(@title) and
-        there_is_no_other_page_entitled?(@title, @page)
+          there_is_no_other_page_with?(@title, @page)
       end
 
-      def there_is_no_other_page_entitled?(title, page)
-        (not @wiki.has_a_page_with?(title: title)) or
-        @wiki.page_with(title: title) == page
+      def there_is_no_other_page_with?(title, page)
+        @wiki.page_with(title: title) == page or
+          not @wiki.has_a_page_with?(title: title)
       end
 
       def render_updated_page(response)
         @page.title, @page.content = @title, @content
-        redirect_to_page(@page, response)
+        redirect_to(@page, response)
       end
 
       def prompt_error(response)

@@ -11,7 +11,7 @@ module Niki
         raise WEBrick::HTTPStatus::NotFound
       end
 
-      def redirect_to_page(page, response)
+      def redirect_to(page, response)
         response.set_redirect(WEBrick::HTTPStatus::Found, full_url_to_page(page))
       end
 
