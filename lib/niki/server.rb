@@ -7,15 +7,12 @@ require 'niki/servlets/all'
 module Niki
   class Server
     include WEBrick
-    include Servlets
 
     PUBLIC_DIR = 'public'
 
-    attr_reader :wiki
-
     def initialize(wiki, port = 8583)
-      @server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => PUBLIC_DIR)
-      setup_infraestructure_for(wiki)
+      @server = setup_server_on port
+      @server.handle wiki
     end
 
     def start
@@ -26,6 +23,23 @@ module Niki
       @server.shutdown
     end
 
+    def wiki
+      @server.wiki
+    end
+
+    private
+
+    def setup_server_on(port)
+      trap('INT'){ stop }
+      WEBrick::HTTPServer.new(Port: port, DocumentRoot: PUBLIC_DIR).extend WikiServer
+    end
+  end
+
+  module WikiServer
+    include Servlets
+
+    attr_reader :wiki
+
     def handle(wiki)
       @wiki = wiki
       mount_servlets_to_handle(wiki)
@@ -33,14 +47,10 @@ module Niki
 
     private
 
-    def setup_infraestructure_for(wiki)
-      handle wiki
-      trap('INT'){ stop }
-    end
-
     def mount_servlets_to_handle(wiki)
-      @server.mount '/new-page', NewPageServlet,      wiki
-      @server.mount '/pages',    ExistingPageServlet, wiki
+       mount '/new-page', NewPageServlet,      wiki
+       mount '/pages',    ExistingPageServlet, wiki
     end
   end
+
 end
