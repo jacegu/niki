@@ -1,6 +1,19 @@
 Niki - A vanilla Ruby wiki
 ==========================
 
+Update
+------
+This branch contains a second version of the wiki. This version was the result of another apprenticeship task. I was asked to:
+
+- Make the wiki *functional*: **everything must be immutable**. No state change can happen. So, when a page is added or updated whate really takes place behind the curtains is that a new wiki is setted up and served.
+- Refactor to **methods that are 2 lines long** at most.
+- **Improve naming and readability**.
+
+
+**Known issues**: There is an issue when the page title includes non ascii-8bit characters. We haven't managed to solve it yet but we will.
+
+- - -
+
 Purpose
 -------
 Niki is my first task as @ecomba's apprentice. I have to develop a wiki using only the Ruby Standard Library.
