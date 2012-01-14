@@ -14,7 +14,7 @@ module Niki
 
       def do_POST(request, response)
         requested = process_existing_page(request)
-        update_page(requested, request, response)
+        update page_with(requested.page_url), request, response
       end
 
       private
@@ -57,21 +57,19 @@ module Niki
         response.body = render :page
       end
 
-      #will this be needed with immutable wiki?
-      #it won't and thats why its longer than two lines of code
-      def update_page(requested, request, response)
-        @page = page_with(requested.page_url)
-        @title, @content  = request.query['title'], request.query['content']
-        if page_can_be_updated?
-          render_updated_page(response)
-        else
-          prompt_error(response)
-        end
+      def update(page, request, response)
+        @page, @title, @content  = page, *page_data_in(request)
+        validate_data_and_update page, response
       end
 
-      def page_can_be_updated?
+      def validate_data_and_update(page, response)
+        return render_updated page, response if can_update? page
+        prompt_error(response)
+      end
+
+      def can_update?(page)
         Page.is_valid_with?(@title) and
-          there_is_no_other_page_with?(@title, @page)
+          there_is_no_other_page_with?(@title, page)
       end
 
       def there_is_no_other_page_with?(title, page)
@@ -79,22 +77,27 @@ module Niki
           not @wiki.has_a_page_with?(title: title)
       end
 
-      def render_updated_page(response)
-        updated_page = update @page
-        redirect_to(updated_page, response)
+      def render_updated(page, response)
+        swap page, updated_page
+        redirect_to updated_page, response
       end
 
-      def update(page)
-        updated_page = Page.with(@title, @content)
-        pages = @server.wiki.pages
-        pages.delete page
-        @server.handle Wiki.with(pages << updated_page)
-        return updated_page
+      def updated_page
+        @updated_page ||= Page.with(@title, @content)
+      end
+
+      def swap(page, new_page)
+        @server.wiki.pages.delete page
+        @server.handle Wiki.with(@server.wiki.pages << updated_page)
       end
 
       def prompt_error(response)
         @error_message = "every page must have a title and it must be different from other pages'"
         response.body = render :edit_page
+      end
+
+      def page_data_in(request)
+        [request.query['title'], request.query['content']]
       end
     end
 
