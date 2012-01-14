@@ -7,7 +7,7 @@ module Niki
 
       def do_POST(request, response)
         process_new_page(request)
-        generate_new_page(response)
+        supply_new_page(response)
       end
 
       private
@@ -17,14 +17,14 @@ module Niki
         @title, @content  = request.query['title'], request.query['content']
       end
 
-      def generate_new_page(response)
+      def supply_new_page(response)
         return create_the_page(response) if page_can_be_added?
         prompt_error(response)
       end
 
       def page_can_be_added?
         Page.is_valid_with?(@title) and
-        not @wiki.has_a_page_with?(title: @title)
+          not @wiki.has_a_page_with?(title: @title)
       end
 
       def create_the_page(response)
@@ -33,8 +33,13 @@ module Niki
       end
 
       def add_and_redirect_to(page, response)
-        @wiki.publish(page)
+        add page
         redirect_to_page(page, response)
+      end
+
+      def add(page)
+        pages = @wiki.pages << page
+        @server.handle Wiki.with pages
       end
 
       def prompt_error(response)
