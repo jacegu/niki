@@ -80,8 +80,16 @@ module Niki
       end
 
       def render_updated_page(response)
-        @page.title, @page.content = @title, @content
-        redirect_to(@page, response)
+        updated_page = update @page
+        redirect_to(updated_page, response)
+      end
+
+      def update(page)
+        updated_page = Page.with(@title, @content)
+        pages = @server.wiki.pages
+        pages.delete page
+        @server.handle Wiki.with(pages << updated_page)
+        return updated_page
       end
 
       def prompt_error(response)
