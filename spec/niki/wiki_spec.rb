@@ -95,5 +95,11 @@ module Niki
       end
     end
 
+    describe '::with pages' do
+      it 'creates a wiki with the given pages' do
+        pages = [stub, stub]
+        Wiki.with(pages).pages.must_equal pages
+      end
+    end
   end
 end

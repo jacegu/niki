@@ -5,6 +5,10 @@ module Niki
   class Wiki
     attr_reader :pages
 
+    def self.with(pages)
+      new(pages)
+    end
+
     def initialize(pages = [])
       @pages = pages
     end
