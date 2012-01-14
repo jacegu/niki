@@ -19,4 +19,8 @@ module Kernel
   def stop_niki_server
     @server.stop
   end
+
+  def wiki
+    @server.wiki
+  end
 end

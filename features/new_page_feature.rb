@@ -40,7 +40,7 @@ feature 'Adding a Page to the wiki' do
       end
 
       it 'adds the page' do
-        last_page = @wiki.pages.last
+        last_page = wiki.pages.last
         last_page.title.must_equal @page_title
         last_page.content.must_equal @page_content
       end
@@ -60,7 +60,7 @@ feature 'Adding a Page to the wiki' do
       end
 
       it 'adds the page' do
-        last_page = @wiki.pages.last
+        last_page = wiki.pages.last
         last_page.title.must_equal @page_title
         last_page.content.must_equal @page_content
       end
@@ -91,7 +91,7 @@ feature 'Adding a Page to the wiki' do
       before do
         @titile = 'The Title'
         @content = 'some content'
-        @wiki.publish Niki::Page.new(@title)
+        wiki.publish Niki::Page.new(@title)
         @response = post '/new-page', {:title => @title, :content => @content}
       end
 

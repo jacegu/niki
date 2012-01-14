@@ -11,6 +11,8 @@ module Niki
 
     PUBLIC_DIR = 'public'
 
+    attr_reader :wiki
+
     def initialize(wiki, port = 8583)
       @server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => PUBLIC_DIR)
       setup_infraestructure_for(wiki)
@@ -24,10 +26,15 @@ module Niki
       @server.shutdown
     end
 
+    def handle(wiki)
+      @wiki = wiki
+      mount_servlets_to_handle(wiki)
+    end
+
     private
 
     def setup_infraestructure_for(wiki)
-      mount_servlets_to_handle(wiki)
+      handle wiki
       trap('INT'){ stop }
     end
 
